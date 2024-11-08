@@ -20,6 +20,7 @@ Anwendungsfälle:
 	
 	
 2. Medien ausleihen:
+
 • Akteur: Kunde
 • Ziel: Medien ausleihen und zurückgeben
 • Schritte:
@@ -60,7 +61,7 @@ Anwendungsfälle:
 	5. Das System zeigt dem Benutzer die aktuellen, ausstehenden Gebühren an.
 	
 		
-5. Überfällige Artikel und Gebühren:
+5. Überfällige Artikel und Gebühren berechnen:
 
 • Akteure: System
 • Ziel: Verwaltung der überfälligen Gebühren
@@ -78,7 +79,7 @@ Anwendungsfälle:
 	
 	
 	
-6. Durchsuchen der Medien:
+6. Durchsuchen der Medien: 
 
 • Akteur: Kunde
 • Ziel: Der Benutzer soll in der Lage sein, den Medienkatalog des Systems nach verschiedenen Kriterien zu durchsuchen, um spezifische Medien zu finden.
