@@ -1,0 +1,104 @@
+Akteure:
+Kunden: Verwalten Medien in der Bibliothek. 
+		Kunden können entweder Mitarbeiter oder normale Kunden sein.
+System: Verwalten von Medien und Kunden in der Bibliothek.
+
+Anwendungsfälle:
+
+1. Registrieren:
+
+• Akteur: Kunde, entweder Erwachsener oder Schüler/Student
+• Ziel: Ein neues Konto erstellen, um einen Bibliotheksausweis mit einer
+		eindeutigen Kartennummer zu erhalten.
+• Schritte:
+	1. Der Kunde öffnet die Registrierungsseite.
+	2. Der Kunde gibt die erforderlichen Informationen ein (z.B. Name, Vorname, Alter).
+	3. Der Kunde sendet das Formular ab.
+	4. Das System überprüft die Eingaben und erstellt ein neues Konto für den Kunden.
+	5. Das System stellt dem Kunden einen Bibliotheksausweis aus.
+	6. Der Kunde erhält seinen Bibliotheksausweis mit der eindeutigen Kartennummer.
+	
+	
+2. Medien ausleihen:
+• Akteur: Kunde
+• Ziel: Medien ausleihen und zurückgeben
+• Schritte:
+	1. Der Kunde muss im System angemeldet sein.
+	2. Der Kunde sucht das Medium, indem er die eindeutige Kennung des Mediums angibt.
+	3. Das System nimmt die Kennung des Mediums entgegen und sucht nach dem entsprechenden Medium.
+	4. Wenn das Medium verfügbar ist, zeigt das System dem Kunden die Ausleihfrist an und beginnt, 
+		diese zu verfolgen. Andernfalls zeigt das System eine entsprechende Meldung an.
+	5. Das System zeigt dem Benutzer die aktuellen, ausstehenden Gebühren an.
+
+
+3. Leihfrist verlängern:
+
+• Akteur: Kunde
+• Ziel: Die Leihfrist für Medien verlängern
+• Schritte:
+	1. Der Kunde muss im System angemeldet sein.
+	2. Der Kunde gibt die eindeutige Kennung des Mediums an.
+	3. Das System überprüft die Art des Mediums.
+	4. Für jede Art von Medium gelten spezifische Ausleihregeln und Fristen:
+		- Bücher: Ausleihe für 4 Wochen, bis zu 3 Mal verlängerbar.
+		- DVDs: Ausleihe für 1 Woche, keine Verlängerung.
+		- CDs: Ausleihe für 2 Wochen, keine Verlängerung.
+		- Brettspiele: Ausleihe für 2 Wochen, keine Verlängerung.
+		- Videospiele: Ausleihe für 4 Wochen, einmal verlängerbar
+		
+
+4. Medien zurückgeben:
+
+• Akteur: Kunde
+• Ziel: Der Kunde kann ausgeliehene Medien zurückgeben.
+• Schritte:
+	1. Der Kunde gibt die eindeutige Kennung des Mediums an.
+	2. Das System entfernt das Medium automatisch aus der Ausleihliste des Benutzers.
+	3. Das System aktualisiert die überfälligen Gebühren.
+	4. Das System zeigt dem Kunden seine verbleibenden ausgeliehenen Medien, 
+		falls noch welche vorhanden sind.
+	5. Das System zeigt dem Benutzer die aktuellen, ausstehenden Gebühren an.
+	
+		
+5. Überfällige Artikel und Gebühren:
+
+• Akteure: System
+• Ziel: Verwaltung der überfälligen Gebühren
+• Schritte:
+	1. Das System überprüft regelmäßig die Rückgabedaten der ausgeliehenen Artikel.
+	2. Wenn ein Artikel überfällig ist, berechnet das System täglich eine Säumnisgebühr:
+		- Für die ersten 7 Tage beträgt die Gebühr 1 € pro Tag.
+		- Ab dem 8. Tag erhöht sich die Gebühr auf 2 € pro Tag.
+	3. Bei Anmeldung des Benutzers oder beim Ausleihen oder Zurückgeben eines Artikels zeigt 
+		das System dem Benutzer die aktuellen, ausstehenden Gebühren an.
+	4. Der Kunde hat die Möglichkeit, die fälligen Gebühren zu „bezahlen“, indem er eine Zahlung anfordert.
+	5. Der Admin-Benutzer erhält eine Benachrichtigung über die ausstehende Zahlung des Benutzers und prüft den offenen Betrag.
+	6. Der Admin-Benutzer bestätigt die Zahlung und markiert 
+		die Gebühren im System für den Kunden als „bezahlt“.im System für die normale Kunde als „bezahlt“.
+	
+	
+	
+6. Durchsuchen der Medien:
+
+• Akteur: Kunde
+• Ziel: Der Benutzer soll in der Lage sein, den Medienkatalog des Systems nach verschiedenen Kriterien zu durchsuchen, um spezifische Medien zu finden.
+• Schritte:
+	1. Kunde öffnet die Suchfunktion des Medienkatalogs im System.
+	1. Kunde soll sich erst im System angemeldet haben
+	3. Kunde gibt den Title eines Gegenstands
+	4. Das System durchsucht den Medienkatalog nach den eingegebenen Kriterien und zeigt eine Liste der passenden Medien an.
+	5. Die Suchergebnisse enthalten für jedes gefundene Medium mindestens die folgenden Informationen:
+		- Name: Der Titel des Mediums.
+		- Autor: Falls zutreffend, wird der Autor angezeigt; andernfalls wird „-“ angegeben.
+		- Medienart: Die Art des Mediums (z.B. Buch, DVD, Zeitschrift)
+		- Ausgeliehen bis: Falls das Medium aktuell ausgeliehen ist, zeigt das System das Rückgabedatum an; andernfalls wird „Verfügbar“ angezeigt.
+
+
+
+7. Hinzufügen von Medien:
+
+• Akteur: Kunde(Mitarbeiter)
+• Ziel: der Mitarbeiter haben die Fähigkeit Medien im System hinzuzufügen   
+• Schritte:
+	1. Der Mitarbeiter gibt die Details des Mediums im System ein.
+	2. Das System fügt das Medium hinzu und aktualisiert den Medienkatalog entsprechend.

@@ -1,0 +1,19 @@
+Aspekt1: 
+Im Anforderungsdokument werden zwei Arten von Benutzern genannt:
+
+	- Erwachsene: Zahlen regulären Preis
+	- Schüler und Studenten: Zahlen ermäßigten Preis
+
+Frage: Sollten hier „Erwachsene“ so verstanden werden, dass es sich um Nutzer handelt, die weder Schüler noch Studenten sind?
+
+
+Aspekt2:
+Die Aufgabe verlangt, dass nur der Admin die Zahlung von überfälligen Gebühren bearbeiten kann.
+- Hat der Admin Zugang zu den Kontoinformationen der normalen Kunden, oder wie prüft der Admin, ob der Kunde den fälligen Betrag beglichen hat?
+
+
+Aspekt3:
+Zum Ausleihen von Medien muss sich der Benutzer laut Anforderung vorher im System anmelden.
+
+Frage: Wie wird jedoch der Ausleihprozess gehandhabt, wenn der Benutzer die Medien direkt vor Ort in der Bibliothek ausleihen möchte? 
+Ist eine Anmeldung im System dafür zwingend erforderlich, oder gibt es eine andere Möglichkeit für den Vor-Ort-Ausleihprozess?
