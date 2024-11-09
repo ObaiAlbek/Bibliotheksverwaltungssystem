@@ -1,0 +1,11 @@
+Anforderungsanalyse:
+Für das Bibliotheksverwaltungssystem werde ich zunächst eine gründliche Analyse der Anforderungen durchführen. 
+Hierbei werde ich festlegen, welche Funktionen und Ziele die Software erfüllen soll. Ein wesentlicher Aspekt ist auch, 
+die unterschiedlichen Akteure zu identifizieren, die die Software verwenden werden, um ihre Bedürfnisse und Anforderungen zu berücksichtigen. 
+
+Design und Datenstrukturentscheidung:
+In diesem Schritt plane und entwerfe ich die grundlegende Klassenstruktur. 
+Dazu werde ich ermitteln, wie viele Klassen benötigt werden und welche Attribute und Methoden jede Klasse enthalten soll. 
+ich werde auch die Beziehungen zwischen den Klassen definieren(z.b Vererbung, Assoziation, etc..)
+
+ 
