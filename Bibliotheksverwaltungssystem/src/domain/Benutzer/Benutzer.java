@@ -1,7 +1,7 @@
 package domain.Benutzer;
 
 import java.util.ArrayList;
-import domain.Ausweis;
+
 import domain.Medium.Medium;
 
 public abstract class Benutzer {
@@ -11,6 +11,8 @@ public abstract class Benutzer {
 	private int alter;
 	private boolean istStudent;
 	private ArrayList<Medium> ausgeliehenenMedien;
+	private boolean angemeldet;
+	
 	
 	public Benutzer(Ausweis bibAusweis, String name, int alter, boolean istStudent) {
 		super();
@@ -19,6 +21,7 @@ public abstract class Benutzer {
 		this.alter = alter;
 		this.istStudent = istStudent;
 		this.ausgeliehenenMedien = new ArrayList<>();
+		this.angemeldet = false;
 	}
 
 	public Ausweis getBibAusweis() {
@@ -64,11 +67,19 @@ public abstract class Benutzer {
 	public void removeMedium(Medium medium) {
 		this.ausgeliehenenMedien.remove(medium);
 	}
+	
+	public boolean isAngemeldet() {
+		return angemeldet;
+	}
+
+	public void setAngemeldet(boolean angemeldet) {
+		this.angemeldet = angemeldet;
+	}
 
 	@Override
 	public String toString() {
 		return "Benutzer [bibAusweisNummer= " + bibAusweis.getKartenNummer() + ", name=" + name + ", alter=" + alter + ", istStudent="
-				+ istStudent + ", ausgeliehenenMedien=" + ausgeliehenenMedien + "]";
+				+ istStudent + ", ist im System Online = " + angemeldet + ", ausgeliehenenMedien=" + ausgeliehenenMedien + "]";
 	}
 	
 	

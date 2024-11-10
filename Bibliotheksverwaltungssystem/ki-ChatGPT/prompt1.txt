@@ -1,0 +1,29 @@
+private Benutzer findBenutzer(int kartennummer) {
+		alleBibBenutzer.stream()
+		.filter(k -> k.getBibAusweis().getKartenNummer() == kartennummer)
+		
+	}
+
+}
+
+wie kann ich hier Benutzer mit Stream zurückgeben?
+
+Antwort:
+Um in der Methode findBenutzer den Benutzer mit der angegebenen Kartennummer zurückzugeben,
+ kannst du den stream()-Ansatz verwenden und das Ergebnis filtern. 
+ Schließlich kannst du mit findFirst() das erste (und in diesem Fall das einzige) Element des Streams 
+ abrufen, das die Bedingung erfüllt. Wenn kein Benutzer mit dieser Kartennummer vorhanden ist, könnte findFirst() ein Optional-Objekt ohne Wert zurückgeben.
+
+Hier ist die angepasste Methode:
+private Benutzer findBenutzer(int kartennummer) {
+    return alleBibBenutzer.stream()
+        .filter(k -> k.getBibAusweis().getKartenNummer() == kartennummer)
+        .findFirst()
+        .orElse(null);  // Gibt null zurück, falls kein Benutzer mit der Kartennummer gefunden wurde
+}
+
+Erklärung der Anpassung
+stream(): Wandelt die ArrayList in einen Stream um.
+filter(...): Filtert den Stream nach Benutzern, deren Kartennummer mit der gesuchten übereinstimmt.
+findFirst(): Nimmt das erste Element des Streams, das die Filterbedingung erfüllt.
+orElse(null): Gibt null zurück, falls kein Benutzer gefunden wurde.

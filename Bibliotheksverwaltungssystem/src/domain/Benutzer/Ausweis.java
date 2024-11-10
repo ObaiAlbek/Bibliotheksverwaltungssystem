@@ -1,4 +1,4 @@
-package domain;
+package domain.Benutzer;
 
 public class Ausweis {
 	private int kartenNummer;

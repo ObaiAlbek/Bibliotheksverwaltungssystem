@@ -3,6 +3,7 @@ package tui;
 import java.util.Scanner;
 
 import domain.BibSystem;
+import domain.ExceptionsKlassen.BenutzerNichtGefundenException;
 import domain.ExceptionsKlassen.FalscheEingabeException;
 
 public class Tui {
@@ -36,10 +37,32 @@ public class Tui {
 				case "1":
 					registrierenProzess();
 					break;
+					
+				case "2":
+					anmeldenProzess();
+					break;
 			}
 		}
 		
 	}
+	
+	
+	private void anmeldenProzess() {
+		int kartennummer;
+		System.out.println("Geben Sie bitte die Kartennummer Ihres Bibliotheksausweises an: ");
+		System.out.print(">");
+		kartennummer = eingabe.nextInt();
+		
+		try {
+			if (fassade.userAnmdelden(kartennummer))
+				System.out.println("Sie sind nun im System Angemeldet");
+		} catch (BenutzerNichtGefundenException e) {
+			System.out.println(e.getMessage());
+		}
+		startBibProgramm();
+	}
+	
+	
 	
 	private void registrierenProzess() {
 		boolean registrierenProzess = true;
@@ -62,7 +85,7 @@ public class Tui {
 			System.out.print(">");
 			istAdmin = eingabe.nextLine();
 			try {
-				fassade.addUser(name, type, alter, istAdmin);
+				fassade.userRegistrieren(name, type, alter, istAdmin);
 				startBibProgramm();
 			} catch (FalscheEingabeException e) {
 				System.out.println(e.getMessage());
@@ -70,5 +93,6 @@ public class Tui {
 			}
 
 		}
+
 	}
 }
