@@ -2,6 +2,7 @@ package domain.Benutzer;
 
 import java.util.ArrayList;
 
+import domain.MediumZumAusleihen;
 import domain.Medium.Medium;
 
 public abstract class Benutzer {
@@ -10,7 +11,7 @@ public abstract class Benutzer {
 	private String name;
 	private int alter;
 	private boolean istStudent;
-	private ArrayList<Medium> ausgeliehenenMedien;
+	private ArrayList<MediumZumAusleihen> ausgeliehenenMedien;
 	private boolean angemeldet;
 	
 	
@@ -56,15 +57,15 @@ public abstract class Benutzer {
 		this.istStudent = istStudent;
 	}
 
-	public ArrayList<Medium> getAusgeliehenenMedien() {
+	public ArrayList<MediumZumAusleihen> getAusgeliehenenMedien() {
 		return ausgeliehenenMedien;
 	}
 	
-	public void addMedium(Medium medium) {
+	public void ausleihen(MediumZumAusleihen medium) {
 		this.ausgeliehenenMedien.add(medium);
 	}
 	
-	public void removeMedium(Medium medium) {
+	public void removeMedium(MediumZumAusleihen medium) {
 		this.ausgeliehenenMedien.remove(medium);
 	}
 	

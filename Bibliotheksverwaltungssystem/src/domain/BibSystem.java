@@ -5,12 +5,20 @@ import java.util.stream.Stream;
 
 import domain.Benutzer.*;
 import domain.ExceptionsKlassen.*;
+import domain.Medium.Buch;
+import domain.Medium.Medium;
 
 public class BibSystem {
 	private ArrayList<Benutzer> alleBibBenutzer;
+	private ArrayList<Medium> alleMediums;
+	private AusleiheSystem ausleiheSystem;
 	
 	public BibSystem() {
+		
 		this.alleBibBenutzer = new ArrayList<>();
+		this.alleMediums = new ArrayList<>();
+		this.ausleiheSystem = new AusleiheSystem(alleMediums);
+		mediumAufladen();
 	}
 	
 	public String userRegistrieren(String name, String type, int alter,String istAdmin) throws FalscheEingabeException {
@@ -32,19 +40,48 @@ public class BibSystem {
 	}
 	
 	public boolean userAnmdelden(int kartennummer) throws BenutzerNichtGefundenException {
-		Benutzer tempUser = findBenutzer(kartennummer);
-		if (tempUser == null)
-			throw new  BenutzerNichtGefundenException("Benutzer mit Kartennummer " + kartennummer + " nicht gefunden");
-		
+		Benutzer tempUser = findBenutzer(kartennummer);		
 		tempUser.setAngemeldet(true);
 		return tempUser.isAngemeldet();
 	}
 	
-	private Benutzer findBenutzer(int kartennummer) {
+	public void mediumAusleihen(int kartennummer, String eindeutigeKennung) throws BenutzerNichtAngemeldetException, BenutzerNichtGefundenException, MediumNichtGefundenException {
+		Benutzer tempBenutzer = findBenutzer(kartennummer);
+		
+		if (!checkIfUserImSystemAngemeldetIst(kartennummer)) 
+			throw new BenutzerNichtAngemeldetException("Sie müssen sich erst im System anmelden");
+		
+		
+		ausleiheSystem.mediumAusleihen(tempBenutzer,eindeutigeKennung);
+		
+	}
+	
+	private void mediumAufladen() {
+		
+		alleMediums.add(new Buch("B001","Effektives Java Programmieren",2018,"Joshua Bloch"));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private boolean checkIfUserImSystemAngemeldetIst(int kartennummer) {
+		
+		return alleBibBenutzer.stream()
+				.anyMatch(user -> user.isAngemeldet());
+				
+	}
+	
+	private Benutzer findBenutzer(int kartennummer) throws BenutzerNichtGefundenException {
 	    return alleBibBenutzer.stream()
 	        .filter(k -> k.getBibAusweis().getKartenNummer() == kartennummer)
 	        .findFirst() // nimmt das erste Element des Streams, das die Filterbedingung erfüllt.
-	        .orElse(null);
+	        .orElseThrow(() -> new  BenutzerNichtGefundenException ("Benutzer mit Kartennummer " + kartennummer + " nicht gefunden"));
 	}
 
 }

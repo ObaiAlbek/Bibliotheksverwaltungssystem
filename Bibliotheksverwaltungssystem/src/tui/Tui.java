@@ -86,6 +86,7 @@ public class Tui {
 			istAdmin = eingabe.nextLine();
 			try {
 				fassade.userRegistrieren(name, type, alter, istAdmin);
+				registrierenProzess = false;
 				startBibProgramm();
 			} catch (FalscheEingabeException e) {
 				System.out.println(e.getMessage());

@@ -4,25 +4,27 @@ import java.util.Date;
 
 public abstract class Medium {
 	
-	private int KennungNummer;
+	private String eindeutigeKennung;
 	private String title;
-	private Date erscheinungsjahr;
+	private int erscheinungsjahr;
 	private String autor;
+	private int anzahlWochen;
 	
-	public Medium(int kennungNummer, String title, Date erscheinungsjahr, String autor) {
+	public Medium(String eindeutigeKennung, String title, int erscheinungsjahr, String autor) {
 		super();
-		KennungNummer = kennungNummer;
+		this.eindeutigeKennung = eindeutigeKennung;
 		this.title = title;
 		this.erscheinungsjahr = erscheinungsjahr;
 		this.autor = autor;
+		this.anzahlWochen = 0;
 	}
 
-	public int getKennungNummer() {
-		return KennungNummer;
+	public String getKennungNummer() {
+		return eindeutigeKennung;
 	}
 
-	public void setKennungNummer(int kennungNummer) {
-		KennungNummer = kennungNummer;
+	public void setKennungNummer(String kennungNummer) {
+		eindeutigeKennung = kennungNummer;
 	}
 
 	public String getTitle() {
@@ -33,11 +35,11 @@ public abstract class Medium {
 		this.title = title;
 	}
 
-	public Date getErscheinungsjahr() {
+	public int getErscheinungsjahr() {
 		return erscheinungsjahr;
 	}
 
-	public void setErscheinungsjahr(Date erscheinungsjahr) {
+	public void setErscheinungsjahr(int erscheinungsjahr) {
 		this.erscheinungsjahr = erscheinungsjahr;
 	}
 
@@ -48,6 +50,23 @@ public abstract class Medium {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
+
+	public int getAnzahlWochen() {
+		return anzahlWochen;
+	}
+
+	public void setAnzahlWochen(int anzahlWochen) {
+		this.anzahlWochen = anzahlWochen;
+	}
+
+	@Override
+	public String toString() {
+		return "Medium [eindeutigeKennung=" + eindeutigeKennung + ", title=" + title + ", erscheinungsjahr="
+				+ erscheinungsjahr + ", autor=" + autor + ", anzahlWochen=" + anzahlWochen + "]";
+	}
+	
+	
+	
 	
 	
 }	

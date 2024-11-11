@@ -17,3 +17,9 @@ Zum Ausleihen von Medien muss sich der Benutzer laut Anforderung vorher im Syste
 
 Frage: Wie wird jedoch der Ausleihprozess gehandhabt, wenn der Benutzer die Medien direkt vor Ort in der Bibliothek ausleihen möchte? 
 Ist eine Anmeldung im System dafür zwingend erforderlich, oder gibt es eine andere Möglichkeit für den Vor-Ort-Ausleihprozess?
+
+Aspekt4:
+gibt es in der Bib begrenzte Anzahl von der Mediums oder wie?
+
+Aspekt5: 
+wie viel soll die Benutzer Gebühren bezahlen

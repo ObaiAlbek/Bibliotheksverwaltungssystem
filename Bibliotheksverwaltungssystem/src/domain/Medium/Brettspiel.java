@@ -1,11 +1,10 @@
 package domain.Medium;
 
-import java.util.Date;
 
 public class Brettspiel extends Medium {
 
-	public Brettspiel(int kennungNummer, String title, Date erscheinungsjahr, String autor) {
-		super(kennungNummer, title, erscheinungsjahr, autor);
+	public Brettspiel(String eindeutigeKennung, String title, int erscheinungsjahr, String autor) {
+		super(eindeutigeKennung, title, erscheinungsjahr, autor);
 	}
 
 }

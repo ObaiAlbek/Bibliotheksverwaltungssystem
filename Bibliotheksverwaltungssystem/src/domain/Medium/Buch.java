@@ -3,9 +3,16 @@ package domain.Medium;
 import java.util.Date;
 
 public class Buch extends Medium {
-
-	public Buch(int kennungNummer, String title, Date erscheinungsjahr, String autor) {
-		super(kennungNummer, title, erscheinungsjahr, autor);
+	
+	private int anzahlVerlängerung;
+	public Buch(String eindeutigeKennung, String title, int erscheinungsjahr, String autor) {
+		super(eindeutigeKennung, title, erscheinungsjahr, autor);
 	}
-
+	
+	public int getAnzahlVerlängerung() {
+		return anzahlVerlängerung;
+	}
+	public void setAnzahlVerlängerung(int anzahlVerlängerung) {
+		this.anzahlVerlängerung = anzahlVerlängerung;
+	}
 }
