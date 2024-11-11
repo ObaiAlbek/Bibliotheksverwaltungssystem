@@ -1,5 +1,6 @@
-package domain;
+package domain.AusleiheSystem;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import domain.Medium.Medium;
@@ -7,15 +8,19 @@ import domain.Medium.Medium;
 public class MediumZumAusleihen {
 	
 	private Date ausleihefrist;
+	private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	private String formattedDate;
 	private Medium medium;
+	private boolean verlängerbar;
 	
-	
-	public void getMedium(Medium medium) {
+	public MediumZumAusleihen(boolean verlängerbar, Medium medium) {
 		this.ausleihefrist = new Date();
+		formattedDate = formatter.format(this.ausleihefrist);
+		this.verlängerbar = verlängerbar;
 		this.medium = medium;
 	}
-
-
+	
+	
 	public Date getAusleihefrist() {
 		return ausleihefrist;
 	}
@@ -34,12 +39,12 @@ public class MediumZumAusleihen {
 	public void setMedium(Medium medium) {
 		this.medium = medium;
 	}
-
-
+	
+	
 	@Override
 	public String toString() {
-		return "MediumZumAusleihen [ausleihefrist=" + ausleihefrist + ", medium=" + medium.toString() + "]";
+		return "MediumZumAusleihen [ausleihefrist=" + formattedDate  + ", verlängerbar="
+				+ verlängerbar  +  ", medium=" + medium +  "]";
 	}
-	
-	
+
 }

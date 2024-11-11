@@ -3,8 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import domain.AusleiheSystem.AusleiheSystem;
 import domain.Benutzer.*;
 import domain.ExceptionsKlassen.*;
+import domain.Medium.Brettspiel;
 import domain.Medium.Buch;
 import domain.Medium.Medium;
 
@@ -59,6 +61,8 @@ public class BibSystem {
 	private void mediumAufladen() {
 		
 		alleMediums.add(new Buch("B001","Effektives Java Programmieren",2018,"Joshua Bloch"));
+		alleMediums.add(new Buch("B00","Effektives C++ Programmieren",2012,"XY Müller"));
+		alleMediums.add(new Brettspiel("BG001","Die Siedler von Catan",2012,"XY Müller"));
 	}
 	
 	

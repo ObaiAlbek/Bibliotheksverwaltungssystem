@@ -4,16 +4,24 @@ import java.util.Date;
 
 public class Videospiel extends Medium {
 	
-	private int anzahlVerlängerung;
-	public Videospiel(String kennungNummer, String title, int erscheinungsjahr, String autor) {
-		super(kennungNummer, title, erscheinungsjahr, autor);
+	private String plattform;
+	
+	public Videospiel(String kennungNummer, String title, int erscheinungsjahr, String plattform) {
+		super(kennungNummer, title, erscheinungsjahr);
+		this.plattform = plattform;
+	}
+
+	public String getPlattform() {
+		return plattform;
+	}
+
+	public void setPlattform(String plattform) {
+		this.plattform = plattform;
 	}
 	
-	public int getAnzahlVerlängerung() {
-		return anzahlVerlängerung;
-	}
-	public void setAnzahlVerlängerung(int anzahlVerlängerung) {
-		this.anzahlVerlängerung = anzahlVerlängerung;
+	@Override
+	public String toString() {
+		return "Videospiel: " + super.toString() +  " ,Plattform=" + plattform;
 	}
 
 }

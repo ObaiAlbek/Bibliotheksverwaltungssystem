@@ -3,8 +3,10 @@ package tui;
 import java.util.Scanner;
 
 import domain.BibSystem;
+import domain.ExceptionsKlassen.BenutzerNichtAngemeldetException;
 import domain.ExceptionsKlassen.BenutzerNichtGefundenException;
 import domain.ExceptionsKlassen.FalscheEingabeException;
+import domain.ExceptionsKlassen.MediumNichtGefundenException;
 
 public class Tui {
 	private BibSystem fassade;
@@ -23,8 +25,8 @@ public class Tui {
 		while(programmIstAktiv) {
 			System.out.println("1.Registrieren");
 			System.out.println("2.Anmelden");
-			System.out.println("3.Medien Durchsuchen");
-			System.out.println("4.Ausleihen eines Gegenstandes");
+			System.out.println("4.Medien Durchsuchen");
+			System.out.println("3.Ausleihen eines Gegenstandes");
 			System.out.println("5.Rückgabe eines Gegenstandes");
 			System.out.println("6.Ausgeliehene Gegenstände, Fälligkeitsdaten und aufgelaufene Gebühren anzeigen");
 			System.out.println("7.Verlängern der Leihfrist");
@@ -41,11 +43,46 @@ public class Tui {
 				case "2":
 					anmeldenProzess();
 					break;
+				
+				case "3":
+					mediumDurchsuchenProzess();
+					break;
+					
+				case "4":
+					mediumAusleihenProzess();
+					break;
 			}
 		}
 		
 	}
 	
+	private void mediumAusleihenProzess(){
+		int kartennummer;
+		String eindutigeKennung;
+		boolean mediumAusleihenProzess = true;
+		
+		System.out.println("Geben Sie bitte Ihre kartennummer");
+		System.out.print(">");
+		kartennummer = eingabe.nextInt();
+		while(mediumAusleihenProzess) {
+			System.out.println("Geben Sie bitte die eindutige Kennung des Mediums");
+			System.out.print(">");
+			eindutigeKennung = eingabe.nextLine();
+			
+			try {
+				fassade.mediumAusleihen(kartennummer, eindutigeKennung);
+				
+			} catch (BenutzerNichtAngemeldetException | BenutzerNichtGefundenException | MediumNichtGefundenException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+	}
+	
+	
+	private void mediumDurchsuchenProzess() {
+		
+	}
 	
 	private void anmeldenProzess() {
 		int kartennummer;

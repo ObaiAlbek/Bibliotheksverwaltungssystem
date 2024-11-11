@@ -3,9 +3,22 @@ package domain.Medium;
 import java.util.Date;
 
 public class Cd extends Medium {
-
-	public Cd(String eindeutigeKennung, String title, int erscheinungsjahr, String autor) {
-		super(eindeutigeKennung, title, erscheinungsjahr, autor);
+	
+	private String Künstler;
+	public Cd(String eindeutigeKennung, String title, int erscheinungsjahr, String Künstler) {
+		super(eindeutigeKennung, title, erscheinungsjahr);
+		this.Künstler = Künstler;
+	}
+	public String getKünstler() {
+		return Künstler;
+	}
+	public void setKünstler(String künstler) {
+		Künstler = künstler;
+	}
+	
+	@Override
+	public String toString() {
+		return "CD: " + super.toString() +  " ,Künstler=" + Künstler;
 	}
 
 }

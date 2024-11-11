@@ -1,9 +1,10 @@
-package domain;
+package domain.AusleiheSystem;
 
 import java.util.ArrayList;
 
 import domain.Benutzer.Benutzer;
 import domain.ExceptionsKlassen.MediumNichtGefundenException;
+import domain.Medium.Brettspiel;
 import domain.Medium.Medium;
 
 public class AusleiheSystem {
@@ -18,10 +19,18 @@ public class AusleiheSystem {
 	public void mediumAusleihen(Benutzer benutzer, String eindutigenummer) throws MediumNichtGefundenException {
 		this.benutzer = benutzer;
 		Medium mediumAusleihen = findMedium(eindutigenummer);
-		MediumZumAusleihen medium = new MediumZumAusleihen();
-		medium.getMedium(mediumAusleihen);
-		benutzer.getAusgeliehenenMedien().add(medium);
-		System.out.println(benutzer.getAusgeliehenenMedien().toString());
+		MediumZumAusleihen medium;
+		if (mediumAusleihen instanceof Brettspiel)
+			
+			medium = new MediumZumAusleihen(false,mediumAusleihen);
+		else 
+			medium = new MediumZumAusleihen(true,mediumAusleihen);
+			
+		benutzer.ausleihen(medium);
+		benutzer.getAusgeliehenenMedien().stream()
+		.forEach(System.out::println);
+		
+		
 	}
 	
 	private Medium findMedium(String eindeutigeKennung) throws MediumNichtGefundenException {

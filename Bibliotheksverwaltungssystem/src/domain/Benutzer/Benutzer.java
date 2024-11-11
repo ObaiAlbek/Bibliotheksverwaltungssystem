@@ -2,7 +2,7 @@ package domain.Benutzer;
 
 import java.util.ArrayList;
 
-import domain.MediumZumAusleihen;
+import domain.AusleiheSystem.MediumZumAusleihen;
 import domain.Medium.Medium;
 
 public abstract class Benutzer {

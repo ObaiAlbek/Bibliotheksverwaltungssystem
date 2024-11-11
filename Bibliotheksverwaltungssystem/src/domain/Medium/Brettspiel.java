@@ -2,9 +2,24 @@ package domain.Medium;
 
 
 public class Brettspiel extends Medium {
+	private String Verlag;
 
-	public Brettspiel(String eindeutigeKennung, String title, int erscheinungsjahr, String autor) {
-		super(eindeutigeKennung, title, erscheinungsjahr, autor);
+	public Brettspiel(String eindeutigeKennung, String title, int erscheinungsjahr, String Verlag) {
+		super(eindeutigeKennung, title, erscheinungsjahr);
+		this.Verlag = Verlag;
+	}
+
+	public String getVerlag() {
+		return Verlag;
+	}
+
+	public void setVerlag(String verlag) {
+		Verlag = verlag;
+	}
+	
+	@Override
+	public String toString() {
+		return "Brettspiel: " + super.toString() +  " ,Verlag=" + Verlag;
 	}
 
 }

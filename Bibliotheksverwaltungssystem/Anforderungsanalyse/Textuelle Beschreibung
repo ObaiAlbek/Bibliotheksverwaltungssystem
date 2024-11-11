@@ -21,7 +21,7 @@ Anwendungsfälle:
 	
 2. Medien ausleihen:
 
-• Akteur: Kunde
+• Akteur: Kunde , System
 • Ziel: Medien ausleihen und zurückgeben
 • Schritte:
 	1. Der Kunde muss im System angemeldet sein.
@@ -34,7 +34,7 @@ Anwendungsfälle:
 
 3. Leihfrist verlängern:
 
-• Akteur: Kunde
+• Akteur: Kunde , System
 • Ziel: Die Leihfrist für Medien verlängern
 • Schritte:
 	1. Der Kunde muss im System angemeldet sein.
@@ -63,7 +63,7 @@ Anwendungsfälle:
 		
 5. Überfällige Artikel und Gebühren berechnen:
 
-• Akteure: System
+• Akteur: Kunde , System
 • Ziel: Verwaltung der überfälligen Gebühren
 • Schritte:
 	1. Das System überprüft regelmäßig die Rückgabedaten der ausgeliehenen Artikel.
@@ -81,7 +81,7 @@ Anwendungsfälle:
 	
 6. Durchsuchen der Medien: 
 
-• Akteur: Kunde
+• Akteur: Kunde , System
 • Ziel: Der Benutzer soll in der Lage sein, den Medienkatalog des Systems nach verschiedenen Kriterien zu durchsuchen, um spezifische Medien zu finden.
 • Schritte:
 	1. Kunde öffnet die Suchfunktion des Medienkatalogs im System.
@@ -98,7 +98,7 @@ Anwendungsfälle:
 
 7. Hinzufügen von Medien:
 
-• Akteur: Kunde(Mitarbeiter)
+• Akteur: Kunde(Mitarbeiter), System
 • Ziel: der Mitarbeiter haben die Fähigkeit Medien im System hinzuzufügen   
 • Schritte:
 	1. Der Mitarbeiter gibt die Details des Mediums im System ein.
