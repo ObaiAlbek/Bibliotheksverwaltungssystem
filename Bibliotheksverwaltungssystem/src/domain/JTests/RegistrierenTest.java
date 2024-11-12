@@ -10,6 +10,8 @@ import domain.Benutzer.Ausweis;
 import domain.Benutzer.Benutzer;
 import domain.Benutzer.Kunde;
 import domain.ExceptionsKlassen.FalscheEingabeException;
+import domain.Medium.Buch;
+import domain.Medium.Mediumverwalter;
 
 class RegistrierenTest {
 	private BibSystem bib;
@@ -28,6 +30,7 @@ class RegistrierenTest {
 		
 		assertTrue(test.contains(name));
 		System.out.println(test);
+		
 	}
 
 }

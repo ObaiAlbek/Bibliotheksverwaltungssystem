@@ -1,15 +1,16 @@
 package domain.Benutzer;
 
 public class Ausweis {
-	private int kartenNummer;
+	private String kartennummer;
 	private static int generiereNummer = 1000;
 	
-	public Ausweis() {
-		this.kartenNummer = generiereNummer++;
+	public Ausweis(String zeichen) {
+		
+		this.kartennummer =zeichen + generiereNummer++ ;
 	}
 
-	public int getKartenNummer() {
-		return kartenNummer;
+	public String getKartenNummer() {
+		return kartennummer;
 	}
 	
 }

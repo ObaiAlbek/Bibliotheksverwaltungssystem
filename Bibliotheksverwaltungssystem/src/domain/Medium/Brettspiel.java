@@ -4,8 +4,8 @@ package domain.Medium;
 public class Brettspiel extends Medium {
 	private String Verlag;
 
-	public Brettspiel(String eindeutigeKennung, String title, int erscheinungsjahr,boolean verlängerbar, String Verlag) {
-		super(eindeutigeKennung, title, erscheinungsjahr, verlängerbar);
+	public Brettspiel(String title, int erscheinungsjahr, String Verlag) {
+		super(title, erscheinungsjahr);
 		this.Verlag = Verlag;
 	}
 

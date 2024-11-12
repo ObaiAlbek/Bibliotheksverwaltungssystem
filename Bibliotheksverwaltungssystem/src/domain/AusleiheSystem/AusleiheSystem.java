@@ -8,46 +8,42 @@ import domain.Medium.*;
 
 public class AusleiheSystem {
 	
-	private ArrayList<Medium> mediums; 
+	private  HashMap<String,Mediumverwalter> medien;
 	private Date ausleiheBeginn;
 	private Date ausleiheEnde;
 	private Calendar calendar;
-	private int wocheAnzahlZuAusleihen;
 
 	
-	public AusleiheSystem(ArrayList<Medium> mediums) {
-		this.mediums = mediums;
+	public AusleiheSystem( HashMap<String,Mediumverwalter> medien) {
+		this.medien = medien;
 	}
 	
-	public void mediumAusleihen(Benutzer benutzer, String eindutigenummer) throws MediumNichtGefundenException {
-		Medium mediumAusleihen = findMedium(eindutigenummer);
+	public Ausleihe mediumAusleihen(Benutzer benutzer, String eindutigenummer) throws MediumNichtGefundenException {
+		Mediumverwalter mediumAusleihen = findMedium(eindutigenummer);
+		if (mediumAusleihen.isIstAusgeliehen())
+			throw new MediumNichtGefundenException("Das Medium ist ausgeliehen");
+		
+		mediumAusleihen.setIstAusgeliehen(true);
 		this.ausleiheBeginn = new Date();
 		this.calendar = Calendar.getInstance();
 		calendar.setTime(ausleiheBeginn);
-		if (mediumAusleihen instanceof Buch || mediumAusleihen instanceof Videospiel)
-			wocheAnzahlZuAusleihen = 4;
 
-		else if (mediumAusleihen instanceof Dvd)
-			wocheAnzahlZuAusleihen = 1;
-
-		else if (mediumAusleihen instanceof Cd || mediumAusleihen instanceof Brettspiel)
-			wocheAnzahlZuAusleihen = 2;
-
-		calendar.add(Calendar.WEEK_OF_YEAR, wocheAnzahlZuAusleihen);
+		calendar.add(Calendar.WEEK_OF_YEAR, mediumAusleihen.getWocheAnzahlZumAusleihen());
 		this.ausleiheEnde = calendar.getTime();
-		benutzer.ausleihen(new MediumZumAusleihen(mediumAusleihen,ausleiheBeginn,ausleiheEnde,wocheAnzahlZuAusleihen));
+		Ausleihe neueAusleihe = new Ausleihe(mediumAusleihen,ausleiheBeginn,ausleiheEnde);
+		benutzer.ausleihen(neueAusleihe);
+		return neueAusleihe;
 		
+	}
+	
+	private Mediumverwalter findMedium(String eindeutigeKennung) throws MediumNichtGefundenException {
+	    if (medien.containsKey(eindeutigeKennung)) 
+	        return medien.get(eindeutigeKennung); 
+	    else 
+	        throw new MediumNichtGefundenException("Das ausgewählte Medium ist nicht verfügbar");
+	    
+	}
 
-		benutzer.getAusgeliehenenMedien().stream()
-		.forEach(System.out::println);		
-	}
-	
-	
-	
-	private Medium findMedium(String eindeutigeKennung) throws MediumNichtGefundenException {
-		return mediums.stream()
-		.filter(m -> m.getKennungNummer().equalsIgnoreCase(eindeutigeKennung))
-		.findFirst()
-		.orElseThrow(() -> new MediumNichtGefundenException("Das ausgewählte Medium ist nicht verfügbar"));
-	}
+	 
+
 }

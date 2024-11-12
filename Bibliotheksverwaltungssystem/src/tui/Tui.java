@@ -58,13 +58,13 @@ public class Tui {
 	}
 	
 	private void mediumAusleihenProzess(){
-		int kartennummer;
+		String kartennummer;
 		String eindutigeKennung;
 		boolean mediumAusleihenProzess = true;
 		
 		System.out.println("Geben Sie bitte Ihre kartennummer");
 		System.out.print(">");
-		kartennummer = eingabe.nextInt();
+		kartennummer = eingabe.nextLine();
 		while(mediumAusleihenProzess) {
 			System.out.println("Geben Sie bitte die eindutige Kennung des Mediums");
 			System.out.print(">");
@@ -73,9 +73,9 @@ public class Tui {
 			try {
 				fassade.mediumAusleihen(kartennummer, eindutigeKennung);
 				
-			} catch (BenutzerNichtAngemeldetException | BenutzerNichtGefundenException | MediumNichtGefundenException e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
-			}
+			} 
 		}
 		
 	}
@@ -86,10 +86,10 @@ public class Tui {
 	}
 	
 	private void anmeldenProzess() {
-		int kartennummer;
+		String kartennummer;
 		System.out.println("Geben Sie bitte die Kartennummer Ihres Bibliotheksausweises an: ");
 		System.out.print(">");
-		kartennummer = eingabe.nextInt();
+		kartennummer = eingabe.nextLine();
 		
 		try {
 			if (fassade.userAnmdelden(kartennummer))

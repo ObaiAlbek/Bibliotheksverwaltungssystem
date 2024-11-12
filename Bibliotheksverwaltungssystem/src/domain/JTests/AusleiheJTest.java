@@ -6,13 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.BibSystem;
-import domain.Benutzer.Benutzer;
 import domain.ExceptionsKlassen.BenutzerNichtAngemeldetException;
 import domain.ExceptionsKlassen.BenutzerNichtGefundenException;
 import domain.ExceptionsKlassen.FalscheEingabeException;
 import domain.ExceptionsKlassen.MediumNichtGefundenException;
 
-class AusleihenJTest {
+class AusleiheJTest {
 
 	private BibSystem bib;
 
@@ -22,12 +21,10 @@ class AusleihenJTest {
 	}
 
 	@Test
-	void test() throws FalscheEingabeException, BenutzerNichtAngemeldetException, BenutzerNichtGefundenException, MediumNichtGefundenException {
-		
+	void test() throws FalscheEingabeException, BenutzerNichtGefundenException, BenutzerNichtAngemeldetException, MediumNichtGefundenException {
 		bib.userRegistrieren("obai", "student", 15, "nein");
-		bib.userAnmdelden(1000);
-		bib.mediumAusleihen(1000,"B001" );
-		
+		bib.userAnmdelden("K1000");
+		bib.mediumAusleihen("K1000", "B001");
 	}
 
 }

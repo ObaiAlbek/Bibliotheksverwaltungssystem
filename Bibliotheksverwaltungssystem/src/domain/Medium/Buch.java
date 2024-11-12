@@ -1,17 +1,20 @@
 package domain.Medium;
 
-import java.util.Date;
-
 public class Buch extends Medium {
 	
+	
 	private String autor;
-	public Buch(String eindeutigeKennung, String title, int erscheinungsjahr,boolean verlängerbar, String autor) {
-		super(eindeutigeKennung, title, erscheinungsjahr,verlängerbar);
+
+	public Buch(String title, int erscheinungsjahr, String autor) {
+		super(title, erscheinungsjahr);
 		this.autor = autor;
 	}
+	
+	
 	public String getAutor() {
 		return autor;
 	}
+
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
@@ -19,9 +22,5 @@ public class Buch extends Medium {
 	public String toString() {
 		return "Buch: " + super.toString() +  " ,autor=" + autor;
 	}
-	
-	
-	
-	
 
 }
