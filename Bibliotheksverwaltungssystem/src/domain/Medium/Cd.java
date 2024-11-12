@@ -5,8 +5,8 @@ import java.util.Date;
 public class Cd extends Medium {
 	
 	private String Künstler;
-	public Cd(String eindeutigeKennung, String title, int erscheinungsjahr, String Künstler) {
-		super(eindeutigeKennung, title, erscheinungsjahr);
+	public Cd(String eindeutigeKennung, String title, int erscheinungsjahr,boolean verlängerbar, String Künstler) {
+		super(eindeutigeKennung, title, erscheinungsjahr,verlängerbar);
 		this.Künstler = Künstler;
 	}
 	public String getKünstler() {

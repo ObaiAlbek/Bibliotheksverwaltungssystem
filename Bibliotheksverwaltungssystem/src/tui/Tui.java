@@ -31,6 +31,7 @@ public class Tui {
 			System.out.println("6.Ausgeliehene Gegenstände, Fälligkeitsdaten und aufgelaufene Gebühren anzeigen");
 			System.out.println("7.Verlängern der Leihfrist");
 			System.out.println("8.Verbuchen von überfälligen Gebühren (Admin)");
+			System.out.println("9.Abmlden");
 			System.out.println("Wählen Sie bitte eine Aktion aus: ");
 			System.out.print(">");
 			aktion = eingabe.nextLine();

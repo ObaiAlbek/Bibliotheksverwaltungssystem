@@ -4,8 +4,8 @@ package domain.Medium;
 public class Dvd extends Medium {
 	
 	private String regisseur;
-	public Dvd(String eindeutigeKennung, String title, int erscheinungsjahr, String regisseur) {
-		super(eindeutigeKennung, title, erscheinungsjahr);
+	public Dvd(String eindeutigeKennung, String title, int erscheinungsjahr,boolean verlängerbar,String regisseur) {
+		super(eindeutigeKennung, title, erscheinungsjahr,verlängerbar);
 		this.regisseur = regisseur;
 	}
 	

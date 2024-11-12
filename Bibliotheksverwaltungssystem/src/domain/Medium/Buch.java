@@ -5,8 +5,8 @@ import java.util.Date;
 public class Buch extends Medium {
 	
 	private String autor;
-	public Buch(String eindeutigeKennung, String title, int erscheinungsjahr, String autor) {
-		super(eindeutigeKennung, title, erscheinungsjahr);
+	public Buch(String eindeutigeKennung, String title, int erscheinungsjahr,boolean verlängerbar, String autor) {
+		super(eindeutigeKennung, title, erscheinungsjahr,verlängerbar);
 		this.autor = autor;
 	}
 	public String getAutor() {

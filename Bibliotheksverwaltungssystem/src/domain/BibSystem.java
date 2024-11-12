@@ -60,20 +60,12 @@ public class BibSystem {
 	
 	private void mediumAufladen() {
 		
-		alleMediums.add(new Buch("B001","Effektives Java Programmieren",2018,"Joshua Bloch"));
-		alleMediums.add(new Buch("B00","Effektives C++ Programmieren",2012,"XY Müller"));
-		alleMediums.add(new Brettspiel("BG001","Die Siedler von Catan",2012,"XY Müller"));
+		alleMediums.add(new Buch("B001","Effektives Java Programmieren",2018,true,"Joshua Bloch"));
+		alleMediums.add(new Buch("B00","Effektives C++ Programmieren",2012,true,"XY Müller"));
+		alleMediums.add(new Brettspiel("BG001","Die Siedler von Catan",2012,true,"XY Müller"));
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	private boolean checkIfUserImSystemAngemeldetIst(int kartennummer) {
 		
 		return alleBibBenutzer.stream()

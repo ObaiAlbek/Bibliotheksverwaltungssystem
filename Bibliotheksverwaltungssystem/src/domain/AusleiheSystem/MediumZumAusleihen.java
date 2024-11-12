@@ -7,44 +7,53 @@ import domain.Medium.Medium;
 
 public class MediumZumAusleihen {
 	
-	private Date ausleihefrist;
-	private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-	private String formattedDate;
+	private SimpleDateFormat simpleFormatter;
+	private Date ausleiheBeginn, ausleiheEnde;
 	private Medium medium;
-	private boolean verlängerbar;
+	private int wochenAnzahl;
 	
-	public MediumZumAusleihen(boolean verlängerbar, Medium medium) {
-		this.ausleihefrist = new Date();
-		formattedDate = formatter.format(this.ausleihefrist);
-		this.verlängerbar = verlängerbar;
+	public MediumZumAusleihen(Medium medium,Date ausleiheBeginn, Date ausleiheEnde, int wochenAnzahl) {
 		this.medium = medium;
-	}
-	
-	
-	public Date getAusleihefrist() {
-		return ausleihefrist;
-	}
-
-
-	public void setAusleihefrist(Date ausleihefrist) {
-		this.ausleihefrist = ausleihefrist;
+		this.ausleiheBeginn = ausleiheBeginn;
+		this.ausleiheEnde = ausleiheEnde;
+		this.wochenAnzahl = wochenAnzahl;
+		this.simpleFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	}
 
+	public Date getAusleiheBeginn() {
+		return ausleiheBeginn;
+	}
+
+	public void setAusleiheBeginn(Date ausleiheBeginn) {
+		this.ausleiheBeginn = ausleiheBeginn;
+	}
+
+	public Date getAusleiheEnde() {
+		return ausleiheEnde;
+	}
+
+	public void setAusleiheEnde(Date ausleiheEnde) {
+		this.ausleiheEnde = ausleiheEnde;
+	}
 
 	public Medium getMedium() {
 		return medium;
 	}
 
-
 	public void setMedium(Medium medium) {
 		this.medium = medium;
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "MediumZumAusleihen [ausleihefrist=" + formattedDate  + ", verlängerbar="
-				+ verlängerbar  +  ", medium=" + medium +  "]";
+
+	public int getWochenAnzahl() {
+		return wochenAnzahl;
 	}
 
+	public void setWochenAnzahl(int wochenAnzahl) {
+		this.wochenAnzahl = wochenAnzahl;
+	}
+
+	@Override
+	public String toString() {
+		return "Ausgeliehene Medium: Ausleihe Beginn= " +simpleFormatter.format(ausleiheBeginn) + " ,Ausleihe Ende= " +  simpleFormatter.format(ausleiheEnde) + " ,Wochenanzahl zum Ausleihen= "+ this.wochenAnzahl+" ,Medium= " + medium.toString();
+	}
 }

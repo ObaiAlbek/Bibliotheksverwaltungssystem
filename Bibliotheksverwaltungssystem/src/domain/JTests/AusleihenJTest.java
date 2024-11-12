@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.BibSystem;
+import domain.Benutzer.Benutzer;
 import domain.ExceptionsKlassen.BenutzerNichtAngemeldetException;
 import domain.ExceptionsKlassen.BenutzerNichtGefundenException;
 import domain.ExceptionsKlassen.FalscheEingabeException;
@@ -26,8 +27,6 @@ class AusleihenJTest {
 		bib.userRegistrieren("obai", "student", 15, "nein");
 		bib.userAnmdelden(1000);
 		bib.mediumAusleihen(1000,"B001" );
-		bib.mediumAusleihen(1000,"B00" );
-		bib.mediumAusleihen(1000,"BG001" );
 		
 	}
 

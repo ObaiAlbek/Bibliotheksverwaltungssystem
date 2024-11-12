@@ -1,37 +1,48 @@
 package domain.AusleiheSystem;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import domain.Benutzer.Benutzer;
 import domain.ExceptionsKlassen.MediumNichtGefundenException;
-import domain.Medium.Brettspiel;
-import domain.Medium.Medium;
+import domain.Medium.*;
 
 public class AusleiheSystem {
 	
 	private ArrayList<Medium> mediums; 
-	private Benutzer benutzer;
+	private Date ausleiheBeginn;
+	private Date ausleiheEnde;
+	private Calendar calendar;
+	private int wocheAnzahlZuAusleihen;
+
 	
 	public AusleiheSystem(ArrayList<Medium> mediums) {
 		this.mediums = mediums;
 	}
 	
 	public void mediumAusleihen(Benutzer benutzer, String eindutigenummer) throws MediumNichtGefundenException {
-		this.benutzer = benutzer;
 		Medium mediumAusleihen = findMedium(eindutigenummer);
-		MediumZumAusleihen medium;
-		if (mediumAusleihen instanceof Brettspiel)
-			
-			medium = new MediumZumAusleihen(false,mediumAusleihen);
-		else 
-			medium = new MediumZumAusleihen(true,mediumAusleihen);
-			
-		benutzer.ausleihen(medium);
+		this.ausleiheBeginn = new Date();
+		this.calendar = Calendar.getInstance();
+		calendar.setTime(ausleiheBeginn);
+		if (mediumAusleihen instanceof Buch || mediumAusleihen instanceof Videospiel)
+			wocheAnzahlZuAusleihen = 4;
+
+		else if (mediumAusleihen instanceof Dvd)
+			wocheAnzahlZuAusleihen = 1;
+
+		else if (mediumAusleihen instanceof Cd || mediumAusleihen instanceof Brettspiel)
+			wocheAnzahlZuAusleihen = 2;
+
+		calendar.add(Calendar.WEEK_OF_YEAR, wocheAnzahlZuAusleihen);
+		this.ausleiheEnde = calendar.getTime();
+		benutzer.ausleihen(new MediumZumAusleihen(mediumAusleihen,ausleiheBeginn,ausleiheEnde,wocheAnzahlZuAusleihen));
+		
+
 		benutzer.getAusgeliehenenMedien().stream()
-		.forEach(System.out::println);
-		
-		
+		.forEach(System.out::println);		
 	}
+	
+	
 	
 	private Medium findMedium(String eindeutigeKennung) throws MediumNichtGefundenException {
 		return mediums.stream()
