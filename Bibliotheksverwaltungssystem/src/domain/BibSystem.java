@@ -2,7 +2,10 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import domain.AusleiheSystem.Ausleihe;
@@ -29,15 +32,28 @@ public class BibSystem {
 		mediumsAufladen();
 	}
 	
+	public List<String> mediumDurchsuchen(String title, String bibKartenNummer) throws MediumNichtGefundenException, BenutzerNichtAngemeldetException {
+		if (!checkIfUserImSystemAngemeldetIst(bibKartenNummer)) 
+			throw new BenutzerNichtAngemeldetException("Sie müssen sich erst im System anmelden");		
+		
+		List<String> treffer = medien.values().stream()
+		.filter(t -> t.getMedium().getTitle().equalsIgnoreCase(title))
+		.map(t -> t.toString())
+		.collect(Collectors.toCollection(ArrayList::new));
+
+		return (ArrayList<String>) treffer;
+
+	}
+	
 	public void userRegistrieren(String name, String type, int alter,String istAdmin) throws FalscheEingabeException {
-		Benutzer bibbenutzer = Registieren.userRegistrieren(name, type, alter, istAdmin);
-		alleBibBenutzer.add(bibbenutzer);	
+		Benutzer bibBenutzer = Registieren.userRegistrieren(name, type, alter, istAdmin);
+		alleBibBenutzer.add(bibBenutzer);	
 	}
 	
 	public boolean userAnmdelden(String kartennummer) throws BenutzerNichtGefundenException {
-		Benutzer tempUser = findBenutzer(kartennummer);		
-		tempUser.setAngemeldet(true);
-		return tempUser.isAngemeldet();
+		Benutzer bibBenutzer = findBenutzer(kartennummer);		
+		bibBenutzer.setAngemeldet(true);
+		return bibBenutzer.isAngemeldet();
 	}
 	
 	public void mediumAusleihen(String kartennummer, String eindeutigeKennung) throws Exception {
@@ -55,7 +71,7 @@ public class BibSystem {
 	}
 	
 	private void mediumsAufladen() {
-		medien.put("B001",new Mediumverwalter (true,10,4, new Buch("Effektives Java Programmieren",2018,"Joshua Bloch")));
+		medien.put("B001",new Mediumverwalter (true,10,4, new Buch("t",2018,"Joshua Bloch")));
 		medien.put("B00", new Mediumverwalter (true,10,4, new Buch("Effektives Java Programmieren",2018,"Joshua Bloch")));
 		medien.put("BG001", new Mediumverwalter (false,10,4, new Brettspiel("Die Siedler von Catan",2012,"XY Müller")));
 		
@@ -63,10 +79,8 @@ public class BibSystem {
 	
 		
 	private boolean checkIfUserImSystemAngemeldetIst(String kartennummer) {
-		
 		return alleBibBenutzer.stream()
 				.anyMatch(user -> user.isAngemeldet());
-				
 	}
 	
 	private Benutzer findBenutzer(String kartennummer) throws BenutzerNichtGefundenException {
