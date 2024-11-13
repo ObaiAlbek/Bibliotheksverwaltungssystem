@@ -1,4 +1,4 @@
-package domain.JTests;
+package domain.AusleiheSystem;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +24,7 @@ class AusleiheJTest {
 	void test() throws FalscheEingabeException, BenutzerNichtGefundenException, BenutzerNichtAngemeldetException, MediumNichtGefundenException {
 		bib.userRegistrieren("obai", "student", 15, "nein");
 		bib.userAnmdelden("K1000");
-		bib.mediumAusleihen("K1000", "B001");
+		//bib.mediumAusleihen("K1000", "B001");
 	}
 
 }

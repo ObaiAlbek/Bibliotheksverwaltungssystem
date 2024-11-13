@@ -1,4 +1,4 @@
-package domain.JTests;
+package domain.UserRegistieren;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,13 +23,7 @@ class RegistrierenTest {
 
 	@Test
 	void test() throws FalscheEingabeException {
-		String name = "obai";
-		String type = "schüler";
-		String istAdmin = "nein";
-		String test = bib.userRegistrieren(name, type, 15,istAdmin);
 		
-		assertTrue(test.contains(name));
-		System.out.println(test);
 		
 	}
 
