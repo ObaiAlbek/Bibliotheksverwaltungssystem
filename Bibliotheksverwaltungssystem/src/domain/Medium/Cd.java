@@ -7,7 +7,11 @@ public class Cd extends Medium {
 	private String Künstler;
 	public Cd(String title, int erscheinungsjahr,String Künstler) {
 		super(title, erscheinungsjahr);
-		this.Künstler = Künstler;
+		
+		if (Künstler.isEmpty())
+			this.Künstler = "-";
+		else
+			this.Künstler = Künstler;
 	}
 	
 	public String getKünstler() {

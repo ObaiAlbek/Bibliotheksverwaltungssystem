@@ -2,11 +2,11 @@ package tui;
 
 import java.util.Scanner;
 
-import domain.BibSystem;
 import domain.ExceptionsKlassen.BenutzerNichtAngemeldetException;
 import domain.ExceptionsKlassen.BenutzerNichtGefundenException;
 import domain.ExceptionsKlassen.FalscheEingabeException;
 import domain.ExceptionsKlassen.MediumNichtGefundenException;
+import domain.fassade.BibSystem;
 
 public class Tui {
 	private BibSystem fassade;
@@ -17,7 +17,7 @@ public class Tui {
 		startBibProgramm();
 	}
 	
-	private void startBibProgramm() {
+	private void startBibProgramm() throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
 		String aktion;
 		System.out.println("<< Willkommen in der Bibliothek >>");
 		
@@ -69,7 +69,7 @@ public class Tui {
 			System.out.println("Geben Sie bitte die eindutige Kennung des Mediums");
 			System.out.print(">");
 			eindutigeKennung = eingabe.nextLine();
-			
+		
 			try {
 				fassade.mediumAusleihen(kartennummer, eindutigeKennung);
 				
@@ -81,8 +81,29 @@ public class Tui {
 	}
 	
 	
-	private void mediumDurchsuchenProzess() {
-		
+	private void mediumDurchsuchenProzess() throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
+		String auswahl;
+		String bibKartennummer;
+		boolean mediumDurchsuchenProzess = true;
+		System.out.println("Wählen Sie bitte aus, wonache Sie suchen möchten");
+		while (mediumDurchsuchenProzess) {
+			System.out.println("Katalog der Bibliothek: ");
+			System.out.println("Title");
+			System.out.println("Ausgeliehene Medien");
+			System.out.println("Nicht Ausgeliehene Medien");
+			System.out.println("Medienart (Bücher,Brettspiele,Dvds,Cds oder Videospiele");
+			System.out.println("zurück");
+			auswahl = eingabe.nextLine();
+			if (auswahl.equalsIgnoreCase("zurück")){
+				mediumDurchsuchenProzess = false;
+				startBibProgramm();
+			}
+			System.out.println("gebe Sie nun Ihre BibKartenummer");
+			bibKartennummer = eingabe.nextLine();
+					
+			fassade.mediumDurchsuchen(auswahl, bibKartennummer);
+		}
+
 	}
 	
 	private void anmeldenProzess() {
@@ -90,7 +111,6 @@ public class Tui {
 		System.out.println("Geben Sie bitte die Kartennummer Ihres Bibliotheksausweises an: ");
 		System.out.print(">");
 		kartennummer = eingabe.nextLine();
-		
 		try {
 			if (fassade.userAnmdelden(kartennummer))
 				System.out.println("Sie sind nun im System Angemeldet");

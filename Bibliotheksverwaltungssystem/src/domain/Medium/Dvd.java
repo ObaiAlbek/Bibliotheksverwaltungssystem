@@ -6,7 +6,11 @@ public class Dvd extends Medium {
 	private String regisseur;
 	public Dvd(String title, int erscheinungsjahr,String regisseur) {
 		super(title, erscheinungsjahr);
-		this.regisseur = regisseur;
+		
+		if (regisseur.isEmpty())
+			this.regisseur = "-";
+		else
+			this.regisseur = regisseur;
 	}
 	
 	public String getRegisseur() {

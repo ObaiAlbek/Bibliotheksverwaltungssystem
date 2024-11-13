@@ -8,7 +8,11 @@ public class Videospiel extends Medium {
 	
 	public Videospiel(String title, int erscheinungsjahr, String plattform) {
 		super(title, erscheinungsjahr);
-		this.plattform = plattform;
+		
+		if (plattform.isEmpty())
+			this.plattform = "-";
+		else
+			this.plattform = plattform;
 	}
 
 	public String getPlattform() {

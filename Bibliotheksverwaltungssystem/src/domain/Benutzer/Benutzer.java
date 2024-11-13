@@ -90,7 +90,7 @@ public abstract class Benutzer {
 	@Override
 	public String toString() {
 		return "Benutzer [bibAusweisNummer= " + bibAusweis.getKartenNummer() + ", name=" + name + ", alter=" + alter + ", istStudent="
-				+ istStudent + ", ist im System Online = " + angemeldet + ", ausgeliehenenMedien=" + ausgeliehenenMedien + "]";
+				+ istStudent + ", ist im System Online = " + angemeldet + "Gebühren= "+ gebühren + ", ausgeliehenenMedien=" + ausgeliehenenMedien + "]";
 	}
 	
 	

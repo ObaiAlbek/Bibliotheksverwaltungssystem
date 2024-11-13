@@ -48,7 +48,7 @@ public class Mediumverwalter {
 
 	@Override
 	public String toString() {
-		return   "Medium=" + medium.toString() + " ,verlängerbar=" + verlängerbar + ", anzahl=" + anzahl + ", wocheAnzahlZumAusleihen="
+		return   "Medium=" + medium.toString() + " ,verlängerbar=" + verlängerbar + ", anzahl=" + anzahl + ",ist Ausgeliehen= " + istAusgeliehen + ", wocheAnzahlZumAusleihen="
 				+ wocheAnzahlZumAusleihen ;
 	}
 	

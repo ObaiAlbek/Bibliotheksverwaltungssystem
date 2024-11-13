@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.BibSystem;
 import domain.Benutzer.Ausweis;
 import domain.Benutzer.Benutzer;
 import domain.Benutzer.Kunde;
@@ -13,6 +12,7 @@ import domain.Benutzer.Mitarbeiter;
 import domain.ExceptionsKlassen.FalscheEingabeException;
 import domain.Medium.Buch;
 import domain.Medium.Mediumverwalter;
+import domain.fassade.BibSystem;
 
 class RegistrierenTest {
 	private BibSystem bib;

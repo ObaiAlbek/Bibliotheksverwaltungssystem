@@ -3,6 +3,13 @@ Für das Bibliotheksverwaltungssystem werde ich zunächst eine gründliche Analy
 Hierbei werde ich festlegen, welche Funktionen und Ziele die Software erfüllen soll. Ein wesentlicher Aspekt ist auch, 
 die unterschiedlichen Akteure zu identifizieren, die die Software verwenden werden, um ihre Bedürfnisse und Anforderungen zu berücksichtigen. 
 
+Das Bibsystem unterstützt 6 Aktionen:
+Aktion1 : Registrieren
+Also hier werde ich in der UI dem Benutzer die Möglichkeit seine Daten einzugeben(Name,alter,etc...)
+die Fassade nimmt die Daten entgegen und erstellt für die Benutzer ein neues Konto und ein neuer Ausweis
+hier soll der kunde eingeben, ob er normale Kunde ist oder ein Mitarbeiter(Admin)
+
+
 Design und Datenstrukturentscheidung:
 In diesem Schritt plane und entwerfe ich die grundlegende Klassenstruktur. 
 Dazu werde ich ermitteln, wie viele Klassen benötigt werden und welche Attribute und Methoden jede Klasse enthalten soll. 

@@ -6,7 +6,11 @@ public class Brettspiel extends Medium {
 
 	public Brettspiel(String title, int erscheinungsjahr, String Verlag) {
 		super(title, erscheinungsjahr);
-		this.Verlag = Verlag;
+		
+		if (Verlag.isEmpty())
+			this.Verlag = "-";
+		else
+			this.Verlag = Verlag;
 	}
 
 	public String getVerlag() {

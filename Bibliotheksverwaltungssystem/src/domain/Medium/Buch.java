@@ -7,7 +7,11 @@ public class Buch extends Medium {
 
 	public Buch(String title, int erscheinungsjahr, String autor) {
 		super(title, erscheinungsjahr);
-		this.autor = autor;
+		
+		if (autor.isEmpty())
+			this.autor = "-";
+		else
+			this.autor = autor;
 	}
 	
 	
