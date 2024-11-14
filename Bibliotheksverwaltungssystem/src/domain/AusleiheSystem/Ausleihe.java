@@ -43,6 +43,6 @@ public class Ausleihe {
 
 	@Override
 	public String toString() {
-		return "Ausgeliehene Mediums= "+ medium.toStringOhneAnzahl() + " Ausleihe Beginn= " +simpleFormatter.format(ausleiheBeginn) + " ,Ausleihe Ende= " +  simpleFormatter.format(ausleiheEnde) + " ,verlängerungen=  " + verlängerungen;
+		return "Ausgeliehene Mediums= "+ medium.toString()+ " Ausleihe Beginn= " +simpleFormatter.format(ausleiheBeginn) + " ,Ausleihe Ende= " +  simpleFormatter.format(ausleiheEnde) + " ,verlängerungen=  " + verlängerungen;
 	}
 }

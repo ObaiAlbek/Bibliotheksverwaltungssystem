@@ -37,6 +37,7 @@ public class BibSystem {
 		this.medien = new HashMap<>();
 		this.ausleiheSystem = new AusleiheSystem(medien);
 		this.heutigesDatum = new Date();
+		this.ausleihe = new ArrayList<>();
 		mediumsAufladen();
 	}
 	
@@ -78,7 +79,7 @@ public class BibSystem {
 		return bibBenutzer.isAngemeldet();
 	}
 	
-	public void mediumAusleihen(String bibKartenNummer, String eindeutigeKennung) throws Exception {
+	public String mediumAusleihen(String bibKartenNummer, String eindeutigeKennung) throws Exception {
 		Benutzer tempBenutzer = findeBenutzer(bibKartenNummer);
 		
 		if (tempBenutzer instanceof Mitarbeiter)
@@ -88,7 +89,9 @@ public class BibSystem {
 			throw new BenutzerNichtAngemeldetException("Sie müssen sich erst im System anmelden");
 		
 		Ausleihe neueAusleihe = ausleiheSystem.mediumAusleihen(tempBenutzer,eindeutigeKennung);
+		
 		ausleihe.add(neueAusleihe);
+		return "Das Medium wurde erfolgreich ausgeliehen";
 		
 	}
 	public Date getHeutigesDatum() {

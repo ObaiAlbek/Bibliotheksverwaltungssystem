@@ -12,7 +12,7 @@ public class Tui {
 	private BibSystem fassade;
 	private Scanner eingabe = new Scanner(System.in);
 	
-	public Tui() {
+	public Tui() throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
 		this.fassade = new BibSystem();
 		startBibProgramm();
 	}
@@ -73,10 +73,8 @@ public class Tui {
 			System.out.println("Geben Sie bitte den Datum ein");
 			System.out.println("Geben Sie bitte die Ausleihebeginn");
 
-		
-		
 			try {
-				fassade.mediumAusleihen(kartennummer, eindutigeKennung);
+				System.out.println(fassade.mediumAusleihen(kartennummer, eindutigeKennung));
 				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -111,7 +109,7 @@ public class Tui {
 
 	}
 	
-	private void anmeldenProzess() {
+	private void anmeldenProzess() throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
 		String kartennummer;
 		System.out.println("Geben Sie bitte die Kartennummer Ihres Bibliotheksausweises an: ");
 		System.out.print(">");
@@ -127,7 +125,7 @@ public class Tui {
 	
 	
 	
-	private void registrierenProzess() {
+	private void registrierenProzess() throws MediumNichtGefundenException, BenutzerNichtAngemeldetException {
 		boolean registrierenProzess = true;
 		String name;
 		int alter;

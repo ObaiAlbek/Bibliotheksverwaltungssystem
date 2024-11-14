@@ -53,8 +53,4 @@ public class Mediumverwalter {
 	}
 	
 	
-	public String toStringOhneAnzahl() {
-		return   "Medium=" + medium.toString() + " ,verlängerbar=" + verlängerbar + ", Anzahl der Wochen zum Ausleihen="
-				+ wocheAnzahlZumAusleihen ;
-	}
 }
