@@ -24,14 +24,16 @@ public class AusleiheSystem {
 			throw new MediumNichtGefundenException("Das Medium ist ausgeliehen");
 		
 		mediumAusleihen.setIstAusgeliehen(true);
+		mediumAusleihen.setAnzahl(mediumAusleihen.getAnzahl() - 1);
 		this.ausleiheBeginn = new Date();
 		this.calendar = Calendar.getInstance();
 		calendar.setTime(ausleiheBeginn);
 
-		calendar.add(Calendar.WEEK_OF_YEAR, mediumAusleihen.getWocheAnzahlZumAusleihen());
+		calendar.add(Calendar.WEEK_OF_YEAR, mediumAusleihen.getLeihdauer());
 		this.ausleiheEnde = calendar.getTime();
 		Ausleihe neueAusleihe = new Ausleihe(mediumAusleihen,ausleiheBeginn,ausleiheEnde);
 		benutzer.ausleihen(neueAusleihe);
+		
 		return neueAusleihe;
 		
 	}

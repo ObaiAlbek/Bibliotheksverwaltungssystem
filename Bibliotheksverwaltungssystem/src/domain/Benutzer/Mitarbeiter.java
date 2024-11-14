@@ -6,4 +6,12 @@ public class Mitarbeiter extends Benutzer {
 		super(bibAusweis, name, alter, istStudent);
 	}
 
+	@Override
+	public double getJahresgebühr() {
+		return 50.0;
+	}
+	
+	 public void gebührVerbuchen(Benutzer benutzer) {
+	        benutzer.setGebühren(getGebühren() * 0); 
+	 }
 }

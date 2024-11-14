@@ -6,4 +6,9 @@ public class Kunde extends Benutzer {
 		super(bibAusweis, name, alter, istStudent);
 	}
 
+	@Override
+	public double getJahresgebühr() {
+		return 25.0;
+	}
+
 }

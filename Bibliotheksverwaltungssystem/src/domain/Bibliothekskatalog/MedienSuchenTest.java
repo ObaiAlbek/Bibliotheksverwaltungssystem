@@ -1,4 +1,4 @@
-package domain.MedienDurchsuchen;
+package domain.Bibliothekskatalog;
 
 import static org.junit.jupiter.api.Assertions.*;
 

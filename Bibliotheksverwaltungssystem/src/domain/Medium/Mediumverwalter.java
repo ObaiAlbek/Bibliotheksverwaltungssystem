@@ -4,15 +4,15 @@ public class Mediumverwalter {
 	
 	private boolean verlängerbar;
 	private int anzahl;
-	private int wocheAnzahlZumAusleihen;
+	private int leihdauer;
 	private Medium medium;
 	private boolean istAusgeliehen;
 	
-	public Mediumverwalter(boolean verlängerbar, int anzahl, int wocheAnzahlZumAusleihen, Medium medium) {
+	public Mediumverwalter(boolean verlängerbar, int anzahl, int leihdauer, Medium medium) {
 		super();
 		this.verlängerbar = verlängerbar;
 		this.anzahl = anzahl;
-		this.wocheAnzahlZumAusleihen = wocheAnzahlZumAusleihen;
+		this.leihdauer = leihdauer;
 		this.medium = medium;
 	}
 	
@@ -29,8 +29,8 @@ public class Mediumverwalter {
 		this.anzahl = anzahl;
 	}
 
-	public int getWocheAnzahlZumAusleihen() {
-		return wocheAnzahlZumAusleihen;
+	public int  getLeihdauer(){
+		return leihdauer;
 	}
 
 	public Medium getMedium() {
@@ -48,8 +48,8 @@ public class Mediumverwalter {
 
 	@Override
 	public String toString() {
-		return   "Medium=" + medium.toString() + " ,verlängerbar=" + verlängerbar + ", anzahl=" + anzahl + ",ist Ausgeliehen= " + istAusgeliehen + ", wocheAnzahlZumAusleihen="
-				+ wocheAnzahlZumAusleihen ;
+		return   "Medium=" + medium.toString() + " ,verlängerbar=" + verlängerbar + ", anzahl=" + anzahl + ",ist Ausgeliehen= " + istAusgeliehen + ", Leihdauer="
+				+ leihdauer ;
 	}
 	
 	

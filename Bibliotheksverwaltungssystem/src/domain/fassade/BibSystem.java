@@ -1,6 +1,9 @@
 package domain.fassade;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -11,8 +14,8 @@ import java.util.stream.Stream;
 import domain.AusleiheSystem.Ausleihe;
 import domain.AusleiheSystem.AusleiheSystem;
 import domain.Benutzer.*;
+import domain.Bibliothekskatalog.Mediensuchen;
 import domain.ExceptionsKlassen.*;
-import domain.MedienDurchsuchen.Mediensuchen;
 import domain.Medium.Brettspiel;
 import domain.Medium.Buch;
 import domain.Medium.Medium;
@@ -25,12 +28,15 @@ public class BibSystem {
 	private HashMap<String,Mediumverwalter> medien;
 	private ArrayList<Ausleihe> ausleihe;
 	private AusleiheSystem ausleiheSystem;
-
+	private Date heutigesDatum;
+	private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+ 
 	public BibSystem() {
 
 		this.alleBibBenutzer = new ArrayList<>();
 		this.medien = new HashMap<>();
 		this.ausleiheSystem = new AusleiheSystem(medien);
+		this.heutigesDatum = new Date();
 		mediumsAufladen();
 	}
 	
@@ -85,11 +91,14 @@ public class BibSystem {
 		ausleihe.add(neueAusleihe);
 		
 	}
-	
-	
-	
-	
-	
+	public Date getHeutigesDatum() {
+		return heutigesDatum;
+	}
+
+	public void setHeutigesDatum(String heutigesDatum) throws ParseException {
+		this.heutigesDatum = formatter.parse(heutigesDatum);
+	}
+
 	// Temporäre Test Methode
 	private void mediumsAufladen() {
 		Mediumverwalter buch = new Mediumverwalter(true, 10, 4, new Buch("Effektives Java Programmieren", 2018, "Joshua Bloch"));

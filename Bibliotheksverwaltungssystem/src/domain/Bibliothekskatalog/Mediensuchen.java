@@ -1,4 +1,4 @@
-package domain.MedienDurchsuchen;
+package domain.Bibliothekskatalog;
 
 import java.util.*;
 import java.util.stream.Collectors;
