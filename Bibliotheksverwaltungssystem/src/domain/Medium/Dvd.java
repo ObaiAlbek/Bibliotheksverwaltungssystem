@@ -4,8 +4,8 @@ package domain.Medium;
 public class Dvd extends Medium {
 	
 	private String regisseur;
-	public Dvd(String title, int erscheinungsjahr,String regisseur) {
-		super(title, erscheinungsjahr);
+	public Dvd(String ID,String title, int erscheinungsjahr,String regisseur) {
+		super(ID,title, erscheinungsjahr);
 		
 		if (regisseur.isEmpty())
 			this.regisseur = "-";

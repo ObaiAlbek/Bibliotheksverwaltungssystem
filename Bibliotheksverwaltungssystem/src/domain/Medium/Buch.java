@@ -5,8 +5,8 @@ public class Buch extends Medium {
 	
 	private String autor;
 
-	public Buch(String title, int erscheinungsjahr, String autor) {
-		super(title, erscheinungsjahr);
+	public Buch(String ID,String title, int erscheinungsjahr, String autor) {
+		super(ID,title, erscheinungsjahr);
 		
 		if (autor.isEmpty())
 			this.autor = "-";

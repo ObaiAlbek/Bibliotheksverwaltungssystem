@@ -6,8 +6,8 @@ public class Videospiel extends Medium {
 	
 	private String plattform;
 	
-	public Videospiel(String title, int erscheinungsjahr, String plattform) {
-		super(title, erscheinungsjahr);
+	public Videospiel(String ID,String title, int erscheinungsjahr, String plattform) {
+		super(ID,title, erscheinungsjahr);
 		
 		if (plattform.isEmpty())
 			this.plattform = "-";

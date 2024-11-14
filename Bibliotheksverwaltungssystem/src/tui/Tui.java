@@ -1,5 +1,6 @@
 package tui;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import domain.ExceptionsKlassen.BenutzerNichtAngemeldetException;
@@ -52,9 +53,31 @@ public class Tui {
 				case "4":
 					mediumAusleihenProzess();
 					break;
+					
+				case "5":
+					mediumsRückgabeProzess();
 			}
 		}
 		
+	}
+	
+	private void mediumsRückgabeProzess() throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
+		String eindutigekennung;
+		boolean mediumsRückgabeProzess = true;
+
+		while (mediumsRückgabeProzess) {
+			System.out.println("Geben Sie bitte das eindutige Kennung des Mediums an");
+			eindutigekennung = eingabe.nextLine();
+			ArrayList<String> ausgeliehneMedien = fassade.medienRückgabe(eindutigekennung);
+			System.out.println("Medium ist erfolgreich zurückgegeben");
+			if (ausgeliehneMedien.size() == 0) 
+				System.out.println("Sie haben keine Mediums mehr");
+		
+			else 
+				ausgeliehneMedien.stream().forEach(System.out::println);
+			
+			startBibProgramm();
+		}
 	}
 	
 	private void mediumAusleihenProzess(){

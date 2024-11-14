@@ -4,8 +4,8 @@ package domain.Medium;
 public class Brettspiel extends Medium {
 	private String Verlag;
 
-	public Brettspiel(String title, int erscheinungsjahr, String Verlag) {
-		super(title, erscheinungsjahr);
+	public Brettspiel(String ID,String title, int erscheinungsjahr, String Verlag) {
+		super(ID,title, erscheinungsjahr);
 		
 		if (Verlag.isEmpty())
 			this.Verlag = "-";

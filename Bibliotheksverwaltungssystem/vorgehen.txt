@@ -1,18 +1,27 @@
+Projektstruktur aufsetzen:
+
+ich werde erst das Git-Repository und die Grundstruktur erstellen.
+werde danach die Hauptverzeichnisse und grundlegende Klassen erstellen.
+
+Ich werde in meiner Hauptverzeichnisse drei Packages anlegen: 
+1. domain für das Geschäftslogik
+2. Tui texteulle user Interface Benutzeroberfläche (UI) und Controller-Logik
+	- die BibliotheksUI-Klasse, die die Interaktion mit dem Benutzer ermöglicht.
+	- hierbei werde ich  Methoden für Anmeldung, Medienausleihe, Medienrückgabe, Verlängerung, und Gebührenerfassung erstellen
+3. Main main klasse damit ich mein Software ausführe
+
+
 Anforderungsanalyse:
 Für das Bibliotheksverwaltungssystem werde ich zunächst eine gründliche Analyse der Anforderungen durchführen. 
-Hierbei werde ich festlegen, welche Funktionen und Ziele die Software erfüllen soll. Ein wesentlicher Aspekt ist auch, 
-die unterschiedlichen Akteure zu identifizieren, die die Software verwenden werden, um ihre Bedürfnisse und Anforderungen zu berücksichtigen. 
+Hierbei werde ich festlegen, welche Funktionen und Ziele die BibSoftware erfüllen soll. 
 
-Das Bibsystem unterstützt 6 Aktionen:
-Aktion1 : Registrieren
-Also hier werde ich in der UI dem Benutzer die Möglichkeit seine Daten einzugeben(Name,alter,etc...)
-die Fassade nimmt die Daten entgegen und erstellt für die Benutzer ein neues Konto und ein neuer Ausweis
-hier soll der kunde eingeben, ob er normale Kunde ist oder ein Mitarbeiter(Admin)
+danach werde ich festlegen, welche Klassen ich für mein Software benötige
+ - Entwickle die abstrakte Klasse Medium mit Attributen und Methoden.
+ - Implementiere spezifische Medienklassen (Buch, DVD, CD, Brettspiel, Videospiel).
+ - Erstelle eine abstrakte Klasse Benutzer und spezifische Benutzerklassen (Erwachsener, Schüler, Student).
+ - Implementiere die AdminBenutzer-Klasse für spezielle Verwaltungsfunktionen.
+ 
 
 
-Design und Datenstrukturentscheidung:
-In diesem Schritt plane und entwerfe ich die grundlegende Klassenstruktur. 
-Dazu werde ich ermitteln, wie viele Klassen benötigt werden und welche Attribute und Methoden jede Klasse enthalten soll. 
-ich werde auch die Beziehungen zwischen den Klassen definieren(z.b Vererbung, Assoziation, etc..)
 
  

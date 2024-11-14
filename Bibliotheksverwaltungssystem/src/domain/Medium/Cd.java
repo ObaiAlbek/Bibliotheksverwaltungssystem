@@ -5,8 +5,8 @@ import java.util.Date;
 public class Cd extends Medium {
 	
 	private String Künstler;
-	public Cd(String title, int erscheinungsjahr,String Künstler) {
-		super(title, erscheinungsjahr);
+	public Cd(String ID,String title, int erscheinungsjahr,String Künstler) {
+		super(ID,title, erscheinungsjahr);
 		
 		if (Künstler.isEmpty())
 			this.Künstler = "-";

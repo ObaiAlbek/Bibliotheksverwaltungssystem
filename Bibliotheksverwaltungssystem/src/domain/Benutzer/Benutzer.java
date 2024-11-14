@@ -17,7 +17,7 @@ public abstract class Benutzer {
 	private ArrayList<Ausleihe> ausgeliehenenMedien;
 	private boolean angemeldet;
 	private double gebühren;
-	private Date anmeldebeginn,anmeldeEnde;
+	private Date anmeldebeginn;
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 	
 	public Benutzer(Ausweis bibAusweis, String name, int alter, boolean istStudent) {
@@ -103,22 +103,28 @@ public abstract class Benutzer {
 		this.anmeldebeginn = formatter.parse(anmeldebeginn);
 	}
 
-	public Date getAnmeldeEnde() {
-		return anmeldeEnde;
-	}
-
-	public void setAnmeldeEnde(String anmeldeEnde) throws ParseException {
-		this.anmeldeEnde= formatter.parse(anmeldeEnde);
-	}
+//	public Date getAnmeldeEnde() {
+//		return anmeldeEnde;
+//	}
+//
+//	public void setAnmeldeEnde(String anmeldeEnde) throws ParseException {
+//		this.anmeldeEnde= formatter.parse(anmeldeEnde);
+//	}
 
 	public abstract double getJahresgebühr();
 
 	@Override
 	public String toString() {
-		return "Benutzer [bibAusweisNummer= " + bibAusweis.getKartenNummer() + ", name=" + name + ", alter=" + alter + ", istStudent="
-				+ istStudent + ", ist im System Online = " + angemeldet + "Gebühren= "+ gebühren +"Anmeldet seit= " + formatter.format(anmeldeEnde) + ", ausgeliehenenMedien=" + ausgeliehenenMedien + "]";
+		return "Benutzer [bibAusweisNummer= " + bibAusweis.getKartenNummer() + 
+				", name=" + name + 
+				", alter=" + alter + 
+				", istStudent=" + istStudent + 
+				", ist im System Online = " + angemeldet + 
+				" ,Gebühren= "+ gebühren + "]";
 	}
 	
-	
+	public String zeigeAusgeliehenMediums() {
+		return "Ausgeliehene Mediums= " + ausgeliehenenMedien;
+	}
 }
 

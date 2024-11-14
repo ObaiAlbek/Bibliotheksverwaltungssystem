@@ -31,9 +31,8 @@ public class AusleiheSystem {
 
 		calendar.add(Calendar.WEEK_OF_YEAR, mediumAusleihen.getLeihdauer());
 		this.ausleiheEnde = calendar.getTime();
-		Ausleihe neueAusleihe = new Ausleihe(mediumAusleihen,ausleiheBeginn,ausleiheEnde);
-		benutzer.ausleihen(neueAusleihe);
-		System.out.println(benutzer.getAusgeliehenenMedien());
+		Ausleihe neueAusleihe = new Ausleihe(mediumAusleihen,benutzer,ausleiheBeginn,ausleiheEnde);
+		
 		return neueAusleihe;
 		
 	}
