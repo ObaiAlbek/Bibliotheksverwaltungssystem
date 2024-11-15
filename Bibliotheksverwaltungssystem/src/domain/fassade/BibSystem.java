@@ -54,6 +54,11 @@ public class BibSystem {
 		
 		return ausleiheSystem.SimulieremediumRückgabe(ausleihe, eindeutigeKennung, datum);
 	}
+	
+	public boolean medienVerlängern(String eindeutigeKennung, String bibKartennummer) throws BenutzerNichtGefundenException, MediumNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartennummer);
+		return ausleiheSystem.medienVerlängern(benutzer,eindeutigeKennung);
+	}
 
 	public ArrayList<String> mediumDurchsuchen(String auswahl, String bibKartenNummer)
 			throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {

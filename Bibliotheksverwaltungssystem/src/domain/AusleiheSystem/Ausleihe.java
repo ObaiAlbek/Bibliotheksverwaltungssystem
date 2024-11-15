@@ -21,41 +21,38 @@ public class Ausleihe {
 		this.benutzer = benutzer;
 	}
 
-	
-
 	public Mediumverwalter getMediumverwalter() {
 		return medium;
 	}
-	
+
 	public Benutzer getBenutzer() {
 		return benutzer;
 	}
-
-	
 
 	public LocalDate getAusleiheBeginn() {
 		return ausleiheBeginn;
 	}
 
-
-
 	public void setAusleiheBeginn(LocalDate ausleiheBeginn) {
 		this.ausleiheBeginn = ausleiheBeginn;
 	}
-
-
 
 	public LocalDate getAusleiheEnde() {
 		return ausleiheEnde;
 	}
 
-
-
 	public void setAusleiheEnde(LocalDate ausleiheEnde) {
 		this.ausleiheEnde = ausleiheEnde;
 	}
+	
+	public int getVerlängerungen() {
+		return verlängerungen;
+	}
 
-
+	public void setVerlängerungen(int verlängerungen) {
+		this.verlängerungen = verlängerungen;
+	}
+	
 
 	@Override
 	public String toString() {

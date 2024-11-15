@@ -1,11 +1,13 @@
-package domain.fassade;
+package domain.AusleiheSystem;
 
-import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MedienRückgabeTest {
+import domain.fassade.BibSystem;
+
+class MediumVerlängernTest {
 
 	private BibSystem bib;
 
@@ -19,12 +21,7 @@ class MedienRückgabeTest {
 		bib.userRegistrieren("obai", "student", 15, "nein");
 		bib.userAnmdelden("K1001");
 		bib.mediumAusleihen("K1001", "B001");
-		bib.mediumAusleihen("K1001", "BG001");
-		
-		ArrayList<String> test = bib.medienRückgabe("B001");
-		if (test.size() == 0)
-			System.out.println("kein Mehr");
-		test.forEach(System.out::println);
+		assertTrue(bib.medienVerlängern("B001", "K1001"));
 	}
 
 }

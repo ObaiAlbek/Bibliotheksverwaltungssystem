@@ -112,6 +112,30 @@ public class AusleiheSystem {
 		return gebühren;
 	}
 	
+	public boolean medienVerlängern(Benutzer benutzer, String eindeutigeKennung) throws MediumNichtGefundenException {
+		Ausleihe medium = benutzer.getAusgeliehenenMedien()
+				.stream()
+				.filter(m -> m.getMediumverwalter().getMedium().getID().equalsIgnoreCase(eindeutigeKennung))
+				.findFirst()
+				.orElse(null);
+		
+		if (medium == null) 
+			return false;
+		
+		LocalDate heutigesDatum = LocalDate.now();
+		if (heutigesDatum.isAfter(medium.getAusleiheEnde()))
+			return false;
+		
+		if (!medium.getMediumverwalter().isVerlängerbar())
+			return false;
+		
+		if (medium.getVerlängerungen() == 3)
+			return false;
+		
+		medium.setVerlängerungen(medium.getVerlängerungen() + 1);
+		return true;
+	}
+	
 	
 	private Mediumverwalter findMedium(String eindeutigeKennung) throws MediumNichtGefundenException {
 	    if (medien.containsKey(eindeutigeKennung)) 
