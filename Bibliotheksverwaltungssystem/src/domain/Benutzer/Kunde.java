@@ -1,5 +1,7 @@
 package domain.Benutzer;
 
+import java.time.LocalDate;
+
 public class Kunde extends Benutzer {
 
 	public Kunde(Ausweis bibAusweis, String name, int alter, boolean istStudent) {

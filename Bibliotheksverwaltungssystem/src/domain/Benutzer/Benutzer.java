@@ -1,12 +1,8 @@
 package domain.Benutzer;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-
 import domain.AusleiheSystem.Ausleihe;
-import domain.Medium.Medium;
 
 public abstract class Benutzer {
 	
@@ -17,8 +13,7 @@ public abstract class Benutzer {
 	private ArrayList<Ausleihe> ausgeliehenenMedien;
 	private boolean angemeldet;
 	private double gebühren;
-	private Date anmeldebeginn;
-	private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	private LocalDate anmeldebeginn;
 	
 	public Benutzer(Ausweis bibAusweis, String name, int alter, boolean istStudent) {
 		super();
@@ -29,7 +24,7 @@ public abstract class Benutzer {
 		this.ausgeliehenenMedien = new ArrayList<>();
 		this.angemeldet = false;
 		this.gebühren = 0;
-		this.anmeldebeginn = new Date();
+		this.anmeldebeginn = LocalDate.now();
 	}
 
 	public Ausweis getBibAusweis() {
@@ -72,7 +67,7 @@ public abstract class Benutzer {
 		this.ausgeliehenenMedien.add(medium);
 	}
 	
-	public void removeMedium(Ausleihe medium) {
+	public void mediumZurückgeben(Ausleihe medium) {
 		this.ausgeliehenenMedien.remove(medium);
 	}
 	
@@ -80,7 +75,11 @@ public abstract class Benutzer {
 		return angemeldet;
 	}
 
-	public void setAngemeldet(boolean angemeldet) {
+	public void anmelden(boolean angemeldet) {
+		this.angemeldet = angemeldet;
+	}
+	
+	public void abmelden(boolean angemeldet) {
 		this.angemeldet = angemeldet;
 	}
 	
@@ -93,23 +92,37 @@ public abstract class Benutzer {
 		this.gebühren = gebühren;
 	}
 	
-	
-	
-	public Date getAnmeldebeginn() {
+	public LocalDate getAnmeldebeginn() {
 		return anmeldebeginn;
 	}
 
-	public void setAnmeldebeginn(String anmeldebeginn) throws ParseException {
-		this.anmeldebeginn = formatter.parse(anmeldebeginn);
+	public void setAnmeldebeginn(LocalDate anmeldebeginn) {
+		this.anmeldebeginn = anmeldebeginn;
 	}
+	
+	public double jahresgebühren() {
+		LocalDate nacheinemJahr = anmeldebeginn.plusYears(1);
+		if (LocalDate.now().isAfter(nacheinemJahr)) {
+            this.gebühren += getJahresgebühr();
+            anmeldebeginn = nacheinemJahr; 
+            return this.gebühren;
+        }
+		return 0.0;
+	}
+	
+	public double simuliereJahresGebühren(String anmeldeBeginn) {
+	    LocalDate aktuellesDatum = LocalDate.now();
+	    LocalDate test = LocalDate.parse(anmeldeBeginn);
 
-//	public Date getAnmeldeEnde() {
-//		return anmeldeEnde;
-//	}
-//
-//	public void setAnmeldeEnde(String anmeldeEnde) throws ParseException {
-//		this.anmeldeEnde= formatter.parse(anmeldeEnde);
-//	}
+	    while (test.isBefore(aktuellesDatum)) {
+	    	this.gebühren += getJahresgebühr();
+	        test = test.plusYears(1);
+	    }
+
+	    anmeldebeginn = test;
+	    return this.gebühren;
+	}
+	
 
 	public abstract double getJahresgebühr();
 

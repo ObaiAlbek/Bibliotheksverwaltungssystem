@@ -8,10 +8,11 @@ public class Mitarbeiter extends Benutzer {
 
 	@Override
 	public double getJahresgebühr() {
+	
 		return 50.0;
 	}
 	
 	 public void gebührVerbuchen(Benutzer benutzer) {
-	        benutzer.setGebühren(getGebühren() * 0); 
+	        benutzer.setGebühren(0.0); 
 	 }
 }

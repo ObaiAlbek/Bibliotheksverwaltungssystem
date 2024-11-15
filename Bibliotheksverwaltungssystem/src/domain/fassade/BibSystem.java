@@ -1,26 +1,11 @@
 package domain.fassade;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import domain.AusleiheSystem.Ausleihe;
-import domain.AusleiheSystem.AusleiheSystem;
+import java.util.*;
+import domain.AusleiheSystem.*;
 import domain.Benutzer.*;
 import domain.Bibliothekskatalog.Mediensuchen;
 import domain.ExceptionsKlassen.*;
-import domain.Medium.Brettspiel;
-import domain.Medium.Buch;
-import domain.Medium.Medium;
-import domain.Medium.Mediumverwalter;
-import domain.Medium.Videospiel;
+import domain.Medium.*;
 import domain.UserRegistieren.Registieren;
 
 public class BibSystem {
@@ -28,8 +13,7 @@ public class BibSystem {
 	private HashMap<String, Mediumverwalter> medien;
 	private ArrayList<Ausleihe> ausleihe;
 	private AusleiheSystem ausleiheSystem;
-	private Date heutigesDatum;
-	private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	private Benutzer bibAdmin;
 	
 	private Benutzer temp;
 
@@ -38,11 +22,31 @@ public class BibSystem {
 		this.alleBibBenutzer = new ArrayList<>();
 		this.medien = new HashMap<>();
 		this.ausleiheSystem = new AusleiheSystem(medien);
-		this.heutigesDatum = new Date();
 		this.ausleihe = new ArrayList<>();
+		bibAdmin = new Mitarbeiter(new Ausweis("A"),"XY Müller",20,false);
 		mediumsAufladen();
 	}
-
+	
+	public boolean gebührenBezahlen(double betrag, String bibKartennummer) throws BenutzerNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartennummer);
+		double userBetrag = benutzer.getGebühren();
+		if (betrag == userBetrag ) {
+			((Mitarbeiter)bibAdmin).gebührVerbuchen(benutzer);
+			return true;
+		}
+		return false;
+	}
+	
+	public double jahresGebührenBerechnen(String bibKartennummer) throws BenutzerNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartennummer);
+		return benutzer.jahresgebühren();
+	}
+	
+	public double simuliereJahresGebührenBerechnen(String bibKartennummer, String datum) throws BenutzerNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartennummer);
+		return benutzer.simuliereJahresGebühren(datum);
+	}
+	
 	public ArrayList<String> medienRückgabe(String eindeutigeKennung) {
 		Ausleihe ausgelieheneMedium = ausleihe.stream()
 				.filter(k -> k.getMediumverwalter().getMedium().getID().equalsIgnoreCase(eindeutigeKennung)).findFirst()
@@ -51,7 +55,7 @@ public class BibSystem {
 		ArrayList<String> ausgeliehenMedien = new ArrayList<>();
 
 		if (ausgelieheneMedium != null) {
-			ausgelieheneMedium.getBenutzer().removeMedium(ausgelieheneMedium);
+			ausgelieheneMedium.getBenutzer().mediumZurückgeben(ausgelieheneMedium);
 			ausleihe.remove(ausgelieheneMedium);
 			ausgelieheneMedium.getMediumverwalter().setIstAusgeliehen(false);
 			ausgelieheneMedium.getMediumverwalter().setAnzahl(ausgelieheneMedium.getMediumverwalter().getAnzahl() + 1);
@@ -98,7 +102,7 @@ public class BibSystem {
 
 	public boolean userAnmdelden(String bibKartenNummer) throws BenutzerNichtGefundenException {
 		Benutzer bibBenutzer = findeBenutzer(bibKartenNummer);
-		bibBenutzer.setAngemeldet(true);
+		bibBenutzer.anmelden(true);
 		return bibBenutzer.isAngemeldet();
 	}
 
@@ -118,15 +122,6 @@ public class BibSystem {
 		return "Das Medium wurde erfolgreich ausgeliehen";
 	}
 	
-
-	public Date getHeutigesDatum() {
-		return heutigesDatum;
-	}
-
-	public void setHeutigesDatum(String heutigesDatum) throws ParseException {
-		this.heutigesDatum = formatter.parse(heutigesDatum);
-	}
-
 	// Temporäre Test Methode
 	private void mediumsAufladen() {
 		Mediumverwalter buch = new Mediumverwalter(true, 10, 4,
@@ -153,7 +148,8 @@ public class BibSystem {
 
 	private Benutzer findeBenutzer(String bibKartenNummer) throws BenutzerNichtGefundenException {
 		return alleBibBenutzer.stream()
-				.filter(k -> k.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer)).findFirst()
+				.filter(k -> k.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer))
+				.findFirst()
 				.orElseThrow(() -> new BenutzerNichtGefundenException(
 						"Benutzer mit Kartennummer " + bibKartenNummer + " nicht gefunden"));
 	}
