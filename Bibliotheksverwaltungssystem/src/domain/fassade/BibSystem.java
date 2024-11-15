@@ -14,8 +14,6 @@ public class BibSystem {
 	private ArrayList<Ausleihe> ausleihe;
 	private AusleiheSystem ausleiheSystem;
 	private Benutzer bibAdmin;
-	
-	private Benutzer temp;
 
 	public BibSystem() {
 
@@ -48,22 +46,13 @@ public class BibSystem {
 	}
 	
 	public ArrayList<String> medienRückgabe(String eindeutigeKennung) {
-		Ausleihe ausgelieheneMedium = ausleihe.stream()
-				.filter(k -> k.getMediumverwalter().getMedium().getID().equalsIgnoreCase(eindeutigeKennung)).findFirst()
-				.orElse(null);
-
-		ArrayList<String> ausgeliehenMedien = new ArrayList<>();
-
-		if (ausgelieheneMedium != null) {
-			ausgelieheneMedium.getBenutzer().mediumZurückgeben(ausgelieheneMedium);
-			ausleihe.remove(ausgelieheneMedium);
-			ausgelieheneMedium.getMediumverwalter().setIstAusgeliehen(false);
-			ausgelieheneMedium.getMediumverwalter().setAnzahl(ausgelieheneMedium.getMediumverwalter().getAnzahl() + 1);
-			for (Ausleihe a : ausgelieheneMedium.getBenutzer().getAusgeliehenenMedien())
-				ausgeliehenMedien.add(a.toString());
-
-		}
-		return ausgeliehenMedien;
+		
+		return ausleiheSystem.mediumRückgabe(ausleihe, eindeutigeKennung);
+	}
+	
+	public double simuliereMedienRückgabe(String eindeutigeKennung, String datum) throws MediumNichtGefundenException {
+		
+		return ausleiheSystem.SimulieremediumRückgabe(ausleihe, eindeutigeKennung, datum);
 	}
 
 	public ArrayList<String> mediumDurchsuchen(String auswahl, String bibKartenNummer)
@@ -102,43 +91,39 @@ public class BibSystem {
 
 	public boolean userAnmdelden(String bibKartenNummer) throws BenutzerNichtGefundenException {
 		Benutzer bibBenutzer = findeBenutzer(bibKartenNummer);
-		bibBenutzer.anmelden(true);
+		bibBenutzer.anmelden();
 		return bibBenutzer.isAngemeldet();
 	}
 
 	public String mediumAusleihen(String bibKartenNummer, String eindeutigeKennung) throws Exception {
-		this.temp = findeBenutzer(bibKartenNummer);
-		
-		if (temp instanceof Mitarbeiter)
+		Benutzer bibBenutzer = findeBenutzer(bibKartenNummer);
+
+		if (bibBenutzer instanceof Mitarbeiter)
 			throw new Exception("Mitarbeiter können keine Mediums ausleihen!");
 
 		if (!checkIfUserImSystemAngemeldetIst(bibKartenNummer))
 			throw new BenutzerNichtAngemeldetException("Sie müssen sich erst im System anmelden");
 
-		Ausleihe neueAusleihe = ausleiheSystem.mediumAusleihen(temp, eindeutigeKennung);
+		Ausleihe neueAusleihe = ausleiheSystem.mediumAusleihen(bibBenutzer, eindeutigeKennung);
 		ausleihe.add(neueAusleihe);
-		temp.ausleihen(neueAusleihe);
-		
+		bibBenutzer.ausleihen(neueAusleihe);
 		return "Das Medium wurde erfolgreich ausgeliehen";
 	}
-	
+
 	// Temporäre Test Methode
 	private void mediumsAufladen() {
-		Mediumverwalter buch = new Mediumverwalter(true, 10, 4,
+		Mediumverwalter buch = new Mediumverwalter(true, 10, 28,
 				new Buch("B001", "Effektives Java Programmieren", 2018, "Joshua Bloch"));
 		medien.put(buch.getMedium().getID(), buch);
 
-		Mediumverwalter buchIStAusgeliehen = new Mediumverwalter(true, 10, 4,
-				new Buch("B00", "Effektives C++ Programmieren", 2018, "Joshua Bloch"));
+		Mediumverwalter buchIStAusgeliehen = new Mediumverwalter(true, 10, 28,new Buch("B00", "Effektives C++ Programmieren", 2018, "Joshua Bloch"));
 		buchIStAusgeliehen.setIstAusgeliehen(true);
 		medien.put(buchIStAusgeliehen.getMedium().getID(), buchIStAusgeliehen);
 
-		Mediumverwalter buchIStNichtAusgeliehen = new Mediumverwalter(true, 10, 4,
-				new Buch("BG001", "Javascript lenren", 2018, "Joshua Bloch"));
+		Mediumverwalter buchIStNichtAusgeliehen = new Mediumverwalter(true, 10, 28,new Buch("BG001", "Javascript lenren", 2018, "Joshua Bloch"));
 		medien.put(buchIStNichtAusgeliehen.getMedium().getID(), buchIStNichtAusgeliehen);
 
-		Mediumverwalter Videospiel = new Mediumverwalter(true, 2, 1,
-				new Videospiel("BG00122", "The Legend of Zelda: Breath of the Wild", 2017, "Nintendo Switch"));
+		Mediumverwalter Videospiel = new Mediumverwalter(true, 2, 28,new Videospiel("BG00122", "The Legend of Zelda: Breath of the Wild", 2017, "Nintendo Switch"));
 		medien.put(Videospiel.getMedium().getID(), Videospiel);
 	}
 
@@ -148,8 +133,7 @@ public class BibSystem {
 
 	private Benutzer findeBenutzer(String bibKartenNummer) throws BenutzerNichtGefundenException {
 		return alleBibBenutzer.stream()
-				.filter(k -> k.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer))
-				.findFirst()
+				.filter(k -> k.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer)).findFirst()
 				.orElseThrow(() -> new BenutzerNichtGefundenException(
 						"Benutzer mit Kartennummer " + bibKartenNummer + " nicht gefunden"));
 	}

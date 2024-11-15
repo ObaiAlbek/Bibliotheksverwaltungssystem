@@ -1,12 +1,10 @@
-package domain.gebührenBerechnenTest;
+package domain.fassade;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import domain.fassade.BibSystem;
 
 class JahresGebührenTest {
 	BibSystem fassade;

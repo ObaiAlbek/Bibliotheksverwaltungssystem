@@ -75,12 +75,12 @@ public abstract class Benutzer {
 		return angemeldet;
 	}
 
-	public void anmelden(boolean angemeldet) {
-		this.angemeldet = angemeldet;
+	public void anmelden() {
+		this.angemeldet = true;
 	}
 	
-	public void abmelden(boolean angemeldet) {
-		this.angemeldet = angemeldet;
+	public void abmelden() {
+		this.angemeldet = false ;
 	}
 	
 	
@@ -110,6 +110,7 @@ public abstract class Benutzer {
 		return 0.0;
 	}
 	
+	// Für Testate 
 	public double simuliereJahresGebühren(String anmeldeBeginn) {
 	    LocalDate aktuellesDatum = LocalDate.now();
 	    LocalDate test = LocalDate.parse(anmeldeBeginn);

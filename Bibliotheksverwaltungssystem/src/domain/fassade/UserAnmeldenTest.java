@@ -22,14 +22,14 @@ class UserAnmeldenTest {
 		
 		// True => User ist Angemeldet
 		fassade.userRegistrieren("obai", "Student", 15, "nein");
-		assertTrue(fassade.userAnmdelden("K1000"));
+		assertTrue(fassade.userAnmdelden("K1001"));
 	}
 	
 	@Test
 	void testBenutzerIstNichtImSystem() throws FalscheEingabeException, BenutzerNichtGefundenException {
 		
 		// True, da Benutzer nicht im System ist
-		assertThrows( BenutzerNichtGefundenException.class, () -> fassade.userAnmdelden("K1000") );
+		assertThrows( BenutzerNichtGefundenException.class, () -> fassade.userAnmdelden("K1001") );
 	}
 
 }

@@ -24,31 +24,37 @@ public class Mediensuchen {
 				.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
 	}
 	
+	
 	public ArrayList<String> medienart(String medienart, HashMap<String,Mediumverwalter> medien) {
 		switch(medienart) {
 			case "Bücher":
 				return medien.entrySet().stream()
 						.filter(t -> t.getValue().getMedium() instanceof Buch)
+						.map(t -> ((Buch)t))
 						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
 				
 			case "Brettspiele":
 				return medien.entrySet().stream()
 						.filter(t -> t.getValue().getMedium() instanceof Brettspiel)
+						.map(t -> ((Brettspiel)t))
 						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
 				
 			case "Dvds":
 				return medien.entrySet().stream()
 						.filter(t -> t.getValue().getMedium() instanceof Dvd)
+						.map(t -> ((Dvd)t))
 						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
 				
 			case "Cds":
 				return medien.entrySet().stream()
 						.filter(t -> t.getValue().getMedium() instanceof Cd)
+						.map(t -> ((Cd)t))
 						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
 				
 			case "Videospiele":
 				return medien.entrySet().stream()
 						.filter(t -> t.getValue().getMedium() instanceof Videospiel)
+						.map(t -> ((Videospiel)t))
 						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
 			
 			default:
