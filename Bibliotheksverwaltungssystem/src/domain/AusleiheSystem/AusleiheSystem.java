@@ -28,7 +28,7 @@ public class AusleiheSystem {
 
 		this.ausleiheBeginn = LocalDate.now();
 
-		this.ausleiheEnde = ausleiheBeginn.plusWeeks(mediumAusleihen.getLeihdauer());
+		this.ausleiheEnde = ausleiheBeginn.plusDays(mediumAusleihen.getLeihdauer());
 
 		Ausleihe neueAusleihe = new Ausleihe(mediumAusleihen, benutzer, ausleiheBeginn, ausleiheEnde);
 
@@ -127,9 +127,14 @@ public class AusleiheSystem {
 			return false;
 
 		medium.setVerlängerungen(medium.getVerlängerungen() + 1);
+		medium.setAusleiheBeginn(LocalDate.now());
+		medium.setAusleiheEnde(LocalDate.now().plusDays(medium.getMediumverwalter().getLeihdauer()));
+		
 		return true;
 	}
 
+	
+	
 	private Mediumverwalter findMedium(String eindeutigeKennung) throws MediumNichtGefundenException {
 		if (medien.containsKey(eindeutigeKennung))
 			return medien.get(eindeutigeKennung);

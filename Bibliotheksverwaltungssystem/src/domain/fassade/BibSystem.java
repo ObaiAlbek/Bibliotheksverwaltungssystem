@@ -111,22 +111,54 @@ public class BibSystem {
 		bibBenutzer.ausleihen(neueAusleihe);
 		return "Das Medium wurde erfolgreich ausgeliehen";
 	}
-
 	
-	// Temporäre Test Methode
+	public void mediumsAufladen(String type, String ID, String title, int erscheinungsjahr,String ersteller,String verlängbar,int anzahl,int leihdauer) throws FalscheEingabeException {
+		Mediumverwalter medium;
+		boolean verlängerung = (verlängbar.equalsIgnoreCase("ja")) ? true: false;
+		switch (type) {
+			case "Buch":
+				medium = new Mediumverwalter(new Buch(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
+				break;
+			
+			case "Cd":
+				medium = new Mediumverwalter(new Cd(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
+				break;
+				
+			case "Brettspiel":
+				medium = new Mediumverwalter(new Brettspiel(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
+				break;
+				
+			case "Dvd":
+				medium = new Mediumverwalter(new Dvd(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
+				break;
+				
+			case "Videospiel":
+				medium = new Mediumverwalter(new Videospiel(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
+				break;
+				
+			default:
+				throw new FalscheEingabeException("Falsch Eingabe");
+		}
+		
+		String getMediumID = medium.getMedium().getID();
+		medien.put(getMediumID, medium);
+		
+
+	}
+	
+	// Test Methode
 	private void mediumsAufladen() {
-		Mediumverwalter buch = new Mediumverwalter(true, 10, 28,
-				new Buch("B001", "Effektives Java Programmieren", 2018, "Joshua Bloch"));
+		Mediumverwalter buch = new Mediumverwalter(new Buch("B001", "Effektives Java Programmieren", 2018, "Joshua Bloch"),true, 10, 28);
 		medien.put(buch.getMedium().getID(), buch);
 
-		Mediumverwalter buchIStAusgeliehen = new Mediumverwalter(true, 10, 28,new Buch("B00", "Effektives C++ Programmieren", 2018, "Joshua Bloch"));
+		Mediumverwalter buchIStAusgeliehen = new Mediumverwalter(new Buch("B00", "Effektives C++ Programmieren", 2018, "Joshua Bloch"),true, 10, 28);
 		buchIStAusgeliehen.setIstAusgeliehen(true);
 		medien.put(buchIStAusgeliehen.getMedium().getID(), buchIStAusgeliehen);
 
-		Mediumverwalter buchIStNichtAusgeliehen = new Mediumverwalter(true, 10, 28,new Buch("BG001", "Javascript lenren", 2018, "Joshua Bloch"));
+		Mediumverwalter buchIStNichtAusgeliehen = new Mediumverwalter(new Buch("BG001", "Javascript lenren", 2018, "Joshua Bloch"),true, 10, 28);
 		medien.put(buchIStNichtAusgeliehen.getMedium().getID(), buchIStNichtAusgeliehen);
 
-		Mediumverwalter Videospiel = new Mediumverwalter(true, 2, 28,new Videospiel("BG00122", "The Legend of Zelda: Breath of the Wild", 2017, "Nintendo Switch"));
+		Mediumverwalter Videospiel = new Mediumverwalter(new Videospiel("BG00122", "The Legend of Zelda: Breath of the Wild", 2017, "Nintendo Switch"),true, 2, 28);
 		medien.put(Videospiel.getMedium().getID(), Videospiel);
 	}
 

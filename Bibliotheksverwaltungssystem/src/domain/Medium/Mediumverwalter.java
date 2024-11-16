@@ -8,7 +8,7 @@ public class Mediumverwalter {
 	private Medium medium;
 	private boolean istAusgeliehen;
 	
-	public Mediumverwalter(boolean verlängerbar, int anzahl, int leihdauer, Medium medium) {
+	public Mediumverwalter( Medium medium, boolean verlängerbar, int anzahl, int leihdauer) {
 		super();
 		this.verlängerbar = verlängerbar;
 		this.anzahl = anzahl;
