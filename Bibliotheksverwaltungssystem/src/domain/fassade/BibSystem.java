@@ -46,15 +46,13 @@ public class BibSystem {
 	}
 	
 	public ArrayList<String> medienRückgabe(String eindeutigeKennung) {
-		
 		return ausleiheSystem.mediumRückgabe(ausleihe, eindeutigeKennung);
 	}
-	
+
 	public double simuliereMedienRückgabe(String eindeutigeKennung, String datum) throws MediumNichtGefundenException {
-		
 		return ausleiheSystem.SimulieremediumRückgabe(ausleihe, eindeutigeKennung, datum);
 	}
-	
+
 	public boolean medienVerlängern(String eindeutigeKennung, String bibKartennummer) throws BenutzerNichtGefundenException, MediumNichtGefundenException {
 		Benutzer benutzer = findeBenutzer(bibKartennummer);
 		return ausleiheSystem.medienVerlängern(benutzer,eindeutigeKennung);
@@ -86,7 +84,6 @@ public class BibSystem {
 			throw new MediumNichtGefundenException("Kein treffer");
 
 		return treffer;
-
 	}
 
 	public void userRegistrieren(String name, String type, int alter, String istAdmin) throws FalscheEingabeException {
@@ -115,6 +112,7 @@ public class BibSystem {
 		return "Das Medium wurde erfolgreich ausgeliehen";
 	}
 
+	
 	// Temporäre Test Methode
 	private void mediumsAufladen() {
 		Mediumverwalter buch = new Mediumverwalter(true, 10, 28,
