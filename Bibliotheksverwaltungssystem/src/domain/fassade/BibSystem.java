@@ -25,41 +25,23 @@ public class BibSystem {
 		mediumsAufladen();
 	}
 	
-	public boolean gebührenBezahlen(double betrag, String bibKartennummer) throws BenutzerNichtGefundenException {
-		Benutzer benutzer = findeBenutzer(bibKartennummer);
-		double userBetrag = benutzer.getGebühren();
-		if (betrag == userBetrag ) {
-			((Mitarbeiter)bibAdmin).gebührVerbuchen(benutzer);
-			return true;
-		}
-		return false;
+	// Registrierung
+	public void userRegistrieren(String name, String type, int alter, String istAdmin) throws FalscheEingabeException {
+		Benutzer bibBenutzer = Registieren.userRegistrieren(name, type, alter, istAdmin);
+		alleBibBenutzer.add(bibBenutzer);
 	}
 	
-	public double jahresGebührenBerechnen(String bibKartennummer) throws BenutzerNichtGefundenException {
-		Benutzer benutzer = findeBenutzer(bibKartennummer);
-		return benutzer.jahresgebühren();
+	// Anmeldung
+	public double userAnmelden(String bibKartenNummer) throws BenutzerNichtGefundenException {
+		Benutzer bibBenutzer = findeBenutzer(bibKartenNummer);
+		bibBenutzer.anmelden();
+		return bibBenutzer.getGebühren();
 	}
 	
-	public double simuliereJahresGebührenBerechnen(String bibKartennummer, String datum) throws BenutzerNichtGefundenException {
-		Benutzer benutzer = findeBenutzer(bibKartennummer);
-		return benutzer.simuliereJahresGebühren(datum);
-	}
 	
-	public ArrayList<String> medienRückgabe(String eindeutigeKennung) {
-		return ausleiheSystem.mediumRückgabe(ausleihe, eindeutigeKennung);
-	}
-
-	public double simuliereMedienRückgabe(String eindeutigeKennung, String datum) throws MediumNichtGefundenException {
-		return ausleiheSystem.SimulieremediumRückgabe(ausleihe, eindeutigeKennung, datum);
-	}
-
-	public boolean medienVerlängern(String eindeutigeKennung, String bibKartennummer) throws BenutzerNichtGefundenException, MediumNichtGefundenException {
-		Benutzer benutzer = findeBenutzer(bibKartennummer);
-		return ausleiheSystem.medienVerlängern(benutzer,eindeutigeKennung);
-	}
-
-	public ArrayList<String> mediumDurchsuchen(String auswahl, String bibKartenNummer)
-			throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
+	
+	// Mediums Durchsuchen
+	public ArrayList<String> mediumDurchsuchen(String auswahl, String bibKartenNummer) throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
 		if (!checkIfUserImSystemAngemeldetIst(bibKartenNummer))
 			throw new BenutzerNichtAngemeldetException("Sie müssen sich erst im System anmelden");
 
@@ -85,19 +67,16 @@ public class BibSystem {
 
 		return treffer;
 	}
-
-	public void userRegistrieren(String name, String type, int alter, String istAdmin) throws FalscheEingabeException {
-		Benutzer bibBenutzer = Registieren.userRegistrieren(name, type, alter, istAdmin);
-		alleBibBenutzer.add(bibBenutzer);
-	}
-
-	public boolean userAnmdelden(String bibKartenNummer) throws BenutzerNichtGefundenException {
-		Benutzer bibBenutzer = findeBenutzer(bibKartenNummer);
-		bibBenutzer.anmelden();
-		return bibBenutzer.isAngemeldet();
-	}
-
-	public String mediumAusleihen(String bibKartenNummer, String eindeutigeKennung) throws Exception {
+	
+	/*
+	 * 	Aufgaben des Leihsystems:
+	 * 		1. Mediums ausleihen lassen
+	 * 		2. Mediums verlängern
+	 * 		3. Mediums Rückgabe
+	 */
+	
+	// Mediums Ausleihen
+	public double mediumAusleihen(String bibKartenNummer, String eindeutigeKennung) throws Exception {
 		Benutzer bibBenutzer = findeBenutzer(bibKartenNummer);
 
 		if (bibBenutzer instanceof Mitarbeiter)
@@ -109,44 +88,84 @@ public class BibSystem {
 		Ausleihe neueAusleihe = ausleiheSystem.mediumAusleihen(bibBenutzer, eindeutigeKennung);
 		ausleihe.add(neueAusleihe);
 		bibBenutzer.ausleihen(neueAusleihe);
-		return "Das Medium wurde erfolgreich ausgeliehen";
+		return bibBenutzer.getGebühren();
 	}
 	
-	public void mediumsAufladen(String type, String ID, String title, int erscheinungsjahr,String ersteller,String verlängbar,int anzahl,int leihdauer) throws FalscheEingabeException {
-		Mediumverwalter medium;
-		boolean verlängerung = (verlängbar.equalsIgnoreCase("ja")) ? true: false;
-		switch (type) {
-			case "Buch":
-				medium = new Mediumverwalter(new Buch(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
-				break;
-			
-			case "Cd":
-				medium = new Mediumverwalter(new Cd(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
-				break;
-				
-			case "Brettspiel":
-				medium = new Mediumverwalter(new Brettspiel(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
-				break;
-				
-			case "Dvd":
-				medium = new Mediumverwalter(new Dvd(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
-				break;
-				
-			case "Videospiel":
-				medium = new Mediumverwalter(new Videospiel(ID,title,erscheinungsjahr,ersteller),verlängerung,anzahl,leihdauer);
-				break;
-				
-			default:
-				throw new FalscheEingabeException("Falsch Eingabe");
+	public boolean medienVerlängern(String eindeutigeKennung, String bibKartennummer) throws BenutzerNichtGefundenException, MediumNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartennummer);
+		return ausleiheSystem.medienVerlängern(benutzer,eindeutigeKennung);
+	}
+	
+	// Mediums verlängern
+	public boolean gebührenBezahlen(double betrag, String bibKartennummer) throws BenutzerNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartennummer);
+		double userBetrag = benutzer.getGebühren();
+		if (betrag == userBetrag ) {
+			((Mitarbeiter)bibAdmin).gebührVerbuchen(benutzer);
+			return true;
 		}
-		
-		String getMediumID = medium.getMedium().getID();
-		medien.put(getMediumID, medium);
-		
+		return false;
+	}
+	
+	// Mediums Rückgabe 
+	public ArrayList<String> medienRückgabe(String eindeutigeKennung) {
+		return ausleiheSystem.mediumRückgabe(ausleihe, eindeutigeKennung);
+	}
+	
+	public double datumÄndern(String eindeutigeKennung,String ausleiheBeginn, String ausleiheEnde,String datum) throws MediumNichtGefundenException {
+		return ausleiheSystem.SimulieremediumRückgabe(ausleihe, eindeutigeKennung, ausleiheBeginn, ausleiheEnde, datum);
+	}
+	
+	// jahresGebühren berechnen
+	public double jahresGebührenBerechnen(String bibKartennummer, String datum) throws BenutzerNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartennummer);
+		return benutzer.jahresgebühren(datum);
+	}
+	
+	
+	// Mediums Aufladen 
+	public void mediumsAufladen(String type, String ID, String title, int erscheinungsjahr, String ersteller,
+			String verlängbar, int anzahl, int leihdauer) throws FalscheEingabeException {
+		Mediumverwalter medium;
+		boolean verlängerung = (verlängbar.equalsIgnoreCase("ja")) ? true : false;
+		switch (type) {
+		case "Buch":
+			medium = new Mediumverwalter(new Buch(ID, title, erscheinungsjahr, ersteller), verlängerung, anzahl,
+					leihdauer);
+			break;
+
+		case "Cd":
+			medium = new Mediumverwalter(new Cd(ID, title, erscheinungsjahr, ersteller), verlängerung, anzahl,
+					leihdauer);
+			break;
+
+		case "Brettspiel":
+			medium = new Mediumverwalter(new Brettspiel(ID, title, erscheinungsjahr, ersteller), verlängerung, anzahl,
+					leihdauer);
+			break;
+
+		case "Dvd":
+			medium = new Mediumverwalter(new Dvd(ID, title, erscheinungsjahr, ersteller), verlängerung, anzahl,
+					leihdauer);
+			break;
+
+		case "Videospiel":
+			medium = new Mediumverwalter(new Videospiel(ID, title, erscheinungsjahr, ersteller), verlängerung, anzahl,
+					leihdauer);
+			break;
+
+		default:
+			throw new FalscheEingabeException("Falsch Eingabe");
+		}
+
+		medien.put(ID, medium);
 
 	}
 	
-	// Test Methode
+	/*
+	 *  => Hilfsmethoden
+	 */
+	
 	private void mediumsAufladen() {
 		Mediumverwalter buch = new Mediumverwalter(new Buch("B001", "Effektives Java Programmieren", 2018, "Joshua Bloch"),true, 10, 28);
 		medien.put(buch.getMedium().getID(), buch);

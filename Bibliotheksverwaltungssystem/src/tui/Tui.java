@@ -115,8 +115,9 @@ public class Tui {
         String kartennummer = eingabe.nextLine();
 
         try {
-            if (fassade.userAnmdelden(kartennummer)) {
-                System.out.println("Erfolgreich angemeldet.");
+           {
+        	   double gebühren = fassade.userAnmelden(kartennummer);
+               System.out.println("Erfolgreich angemeldet.\n" + "Gebühren= " + gebühren);
             }
         } catch (BenutzerNichtGefundenException e) {
             System.out.println("Fehler: " + e.getMessage());

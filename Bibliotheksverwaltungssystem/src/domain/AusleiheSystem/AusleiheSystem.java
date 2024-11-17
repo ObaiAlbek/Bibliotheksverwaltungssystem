@@ -12,11 +12,12 @@ public class AusleiheSystem {
 
 	private HashMap<String, Mediumverwalter> medien;
 	private LocalDate ausleiheBeginn, ausleiheEnde;
-
+	
 	public AusleiheSystem(HashMap<String, Mediumverwalter> medien) {
 		this.medien = medien;
 	}
-
+	
+	
 	public Ausleihe mediumAusleihen(Benutzer benutzer, String eindeutigenummer) throws MediumNichtGefundenException {
 		Mediumverwalter mediumAusleihen = findMedium(eindeutigenummer);
 
@@ -43,7 +44,7 @@ public class AusleiheSystem {
 		ArrayList<String> ausgeliehenMedien = new ArrayList<>();
 		LocalDate heutigesDatum;
 		Benutzer bibBenutzer = ausgelieheneMedium.getBenutzer();
-
+		
 		if (ausgelieheneMedium != null) {
 			heutigesDatum = LocalDate.now();
 			if (heutigesDatum.isAfter(ausgelieheneMedium.getAusleiheEnde())) {
@@ -73,39 +74,35 @@ public class AusleiheSystem {
 		return ausgeliehenMedien;
 	}
 
-	public double SimulieremediumRückgabe(ArrayList<Ausleihe> ausleihe, String eindeutigeKennung, String datum)
-			throws MediumNichtGefundenException {
+	public double SimulieremediumRückgabe(ArrayList<Ausleihe> ausleihe, String eindeutigeKennung, String ausleiheBeginn, String ausleiheEnde,String datum) throws MediumNichtGefundenException {
 		Ausleihe ausgelieheneMedium = ausleihe.stream()
 				.filter(k -> k.getMediumverwalter().getMedium().getID().equalsIgnoreCase(eindeutigeKennung)).findFirst()
 				.orElse(null);
-
-		LocalDate heutigesDatum;
-		LocalDate testDatum = LocalDate.parse(datum);
+		
+		LocalDate beginn = LocalDate.parse(ausleiheBeginn);
+		LocalDate ende = LocalDate.parse(ausleiheEnde);
+		LocalDate heutigesDatum = LocalDate.parse(datum);
 		Benutzer bibBenutzer = ausgelieheneMedium.getBenutzer();
-		double gebühren = 0.0;
-		if (ausgelieheneMedium != null) {
-			heutigesDatum = LocalDate.now();
+		
+		ausgelieheneMedium.setAusleiheBeginn(beginn);
+		ausgelieheneMedium.setAusleiheEnde(ende);
+		
+		if (heutigesDatum.isAfter(ausgelieheneMedium.getAusleiheEnde())) {
+			long überfälligeTage = ausgelieheneMedium.getAusleiheEnde().until(heutigesDatum, ChronoUnit.DAYS);
+			double gebühren = 0.0;
+			if (überfälligeTage <= 7)
+				gebühren = überfälligeTage * 1.0;
 
-			if (heutigesDatum.isAfter(testDatum)) {
-				long überfälligeTage = testDatum.until(heutigesDatum, ChronoUnit.DAYS);
+			else {
+				gebühren = (7 * 1.0);
+				gebühren += ((überfälligeTage - 7) * 2.0);
 
-				if (überfälligeTage <= 7)
-					gebühren = überfälligeTage * 1.0;
-
-				else {
-					gebühren = (7 * 1.0);
-					gebühren += ((überfälligeTage - 7) * 2.0);
-
-				}
-
-				bibBenutzer.setGebühren(bibBenutzer.getGebühren() + gebühren);
-				return bibBenutzer.getGebühren();
 			}
 
-		} else
-			throw new MediumNichtGefundenException("Das Medium wurde nicht gefunden");
-
-		return gebühren;
+			bibBenutzer.setGebühren(bibBenutzer.getGebühren() + gebühren);
+		}
+		
+		return bibBenutzer.getGebühren();
 	}
 
 	public boolean medienVerlängern(Benutzer benutzer, String eindeutigeKennung) throws MediumNichtGefundenException {

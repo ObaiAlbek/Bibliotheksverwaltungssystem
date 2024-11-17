@@ -100,32 +100,32 @@ public abstract class Benutzer {
 		this.anmeldebeginn = anmeldebeginn;
 	}
 	
-	public double jahresgebühren() {
-		LocalDate nacheinemJahr = anmeldebeginn.plusYears(1);
-		if (LocalDate.now().isAfter(nacheinemJahr)) {
-            this.gebühren += getJahresgebühr();
-            anmeldebeginn = nacheinemJahr; 
-            return this.gebühren;
-        }
-		return 0.0;
-	}
 	
-	// Für Testate 
-	public double simuliereJahresGebühren(String anmeldeBeginn) {
-	    LocalDate aktuellesDatum = LocalDate.now();
-	    LocalDate test = LocalDate.parse(anmeldeBeginn);
+	public double jahresgebühren(String datum) {
+	    // Falls ein Testdatum angegeben ist
+	    if (!datum.isEmpty()) {
+	        LocalDate aktuellesDatum = LocalDate.parse(datum);
+	        while (this.anmeldebeginn.isBefore(aktuellesDatum)) {
+	            this.gebühren += getJahresgebühren();
+	            this.anmeldebeginn = this.anmeldebeginn.plusYears(1); // Aktualisieren des Startdatums
+	        }
 
-	    while (test.isBefore(aktuellesDatum)) {
-	    	this.gebühren += getJahresgebühr();
-	        test = test.plusYears(1);
+	        this.anmeldebeginn = aktuellesDatum; // Letztes Aktualisieren des Startdatums
+	    } 
+	    else {
+	        LocalDate nachEinemJahr = this.anmeldebeginn.plusYears(1);
+	        while (LocalDate.now().isAfter(nachEinemJahr)) {
+	            this.gebühren += getJahresgebühren();
+	            this.anmeldebeginn = nachEinemJahr;
+	            nachEinemJahr = this.anmeldebeginn.plusYears(1);
+	        }
 	    }
 
-	    anmeldebeginn = test;
 	    return this.gebühren;
 	}
-	
 
-	public abstract double getJahresgebühr();
+
+	public abstract double getJahresgebühren();
 
 	@Override
 	public String toString() {

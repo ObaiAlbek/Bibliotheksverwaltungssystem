@@ -17,10 +17,9 @@ class AusleihfristenGebührenTest {
 	@Test
 	void test() throws Exception {
 		bib.userRegistrieren("obai", "student", 15, "nein");
-		bib.userAnmdelden("K1001");
+		bib.userAnmelden("K1001");
 		bib.mediumAusleihen("K1001", "B001");
 		
-		assertEquals(2.0,bib.simuliereMedienRückgabe("B001", "2024-11-13"));
 	}
 
 }

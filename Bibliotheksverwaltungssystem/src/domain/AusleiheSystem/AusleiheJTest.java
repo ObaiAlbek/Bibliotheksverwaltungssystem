@@ -19,7 +19,7 @@ class AusleiheJTest {
 	@Test
 	void test() throws Exception {
 		bib.userRegistrieren("obai", "student", 15, "nein");
-		bib.userAnmdelden("K1000");
+		bib.userAnmelden("K1000");
 		bib.mediumAusleihen("K1000", "B001");
 	}
 

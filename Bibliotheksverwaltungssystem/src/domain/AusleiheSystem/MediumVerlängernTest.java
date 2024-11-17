@@ -19,7 +19,7 @@ class MediumVerlängernTest {
 	@Test
 	void test() throws Exception {
 		bib.userRegistrieren("obai", "student", 15, "nein");
-		bib.userAnmdelden("K1001");
+		bib.userAnmelden("K1001");
 		bib.mediumAusleihen("K1001", "B001");
 		assertTrue(bib.medienVerlängern("B001", "K1001"));
 	}

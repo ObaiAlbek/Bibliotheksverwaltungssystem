@@ -7,7 +7,7 @@ public class Mitarbeiter extends Benutzer {
 	}
 
 	@Override
-	public double getJahresgebühr() {
+	public double getJahresgebühren() {
 	
 		return 50.0;
 	}

@@ -1,5 +1,8 @@
 package domain.AusleiheSystem;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +22,15 @@ class MedienRückgabeTest {
 	@Test
 	void test() throws Exception {
 		bib.userRegistrieren("obai", "student", 15, "nein");
-		bib.userAnmdelden("K1001");
+		bib.userAnmelden("K1001");
 		bib.mediumAusleihen("K1001", "B001");
-		bib.mediumAusleihen("K1001", "BG001");
 		
-		ArrayList<String> test = bib.medienRückgabe("B001");
-		if (test.size() == 0)
-			System.out.println("kein Mehr");
-		test.forEach(System.out::println);
+		double gebühren = bib.datumÄndern("B001", "2022-09-01", "2022-10-01", "2022-10-03");
+		assertEquals(2.0,gebühren);
+		
+		
 	}
+
+	
 
 }

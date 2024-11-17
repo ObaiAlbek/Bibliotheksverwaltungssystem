@@ -24,7 +24,7 @@ private BibSystem fassade;
 	void erstelleObjekt() throws FalscheEingabeException, BenutzerNichtGefundenException {
 		this.fassade = new BibSystem();
 		fassade.userRegistrieren("obai", "student", 15, "nein");
-		fassade.userAnmdelden("K1000");
+		fassade.userAnmelden("K1000");
 
 	}
 	

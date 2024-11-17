@@ -9,7 +9,7 @@ public class Kunde extends Benutzer {
 	}
 
 	@Override
-	public double getJahresgebühr() {
+	public double getJahresgebühren() {
 		return 25.0;
 	}
 

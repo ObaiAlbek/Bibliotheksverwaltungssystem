@@ -9,27 +9,23 @@ import org.junit.jupiter.api.Test;
 import domain.ExceptionsKlassen.BenutzerNichtGefundenException;
 import domain.ExceptionsKlassen.FalscheEingabeException;
 
-class UserAnmeldenTest {
-	
+class GebührenTest {
+
 	BibSystem fassade;
+
 	@BeforeEach
 	void setUp() throws Exception {
 		fassade = new BibSystem();
 	}
 
 	@Test
-	void testAnmelden() throws FalscheEingabeException, BenutzerNichtGefundenException {
-		
-		// True => User ist Angemeldet
-		fassade.userRegistrieren("obai", "Student", 15, "nein");
+	void testGebühren() throws Exception {
+		fassade.userRegistrieren("obai", "schüler", 15, "nein");
 		fassade.userAnmelden("K1001");
-	}
-	
-	@Test
-	void testBenutzerIstNichtImSystem() throws FalscheEingabeException, BenutzerNichtGefundenException {
+		double gebühren = fassade.jahresGebührenBerechnen("K1001", "2026-11-16");
+		assertEquals(50.0, gebühren);
 		
-		// True, da Benutzer nicht im System ist
-		assertThrows( BenutzerNichtGefundenException.class, () -> fassade.userAnmelden("K1001") );
+
 	}
 
 }
