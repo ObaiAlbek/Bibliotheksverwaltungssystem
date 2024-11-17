@@ -68,6 +68,16 @@ public class BibSystem {
 		return treffer;
 	}
 	
+	public ArrayList<String> ausgeliehenGegenstände(String bibKartennummer) throws BenutzerNichtGefundenException{
+		Benutzer bibUser = findeBenutzer(bibKartennummer);
+		ArrayList<String> treffer = new ArrayList<>();
+		for (Ausleihe ausleihe:bibUser.getAusgeliehenenMedien())
+			treffer.add(ausleihe.toString());
+		
+		return treffer;
+		
+	}
+	
 	/*
 	 * 	Aufgaben des Leihsystems:
 	 * 		1. Mediums ausleihen lassen
@@ -91,12 +101,13 @@ public class BibSystem {
 		return bibBenutzer.getGebühren();
 	}
 	
+	// Mediums verlängern
 	public boolean medienVerlängern(String eindeutigeKennung, String bibKartennummer) throws BenutzerNichtGefundenException, MediumNichtGefundenException {
 		Benutzer benutzer = findeBenutzer(bibKartennummer);
 		return ausleiheSystem.medienVerlängern(benutzer,eindeutigeKennung);
 	}
 	
-	// Mediums verlängern
+	// gebühren Bezahlen
 	public boolean gebührenBezahlen(double betrag, String bibKartennummer) throws BenutzerNichtGefundenException {
 		Benutzer benutzer = findeBenutzer(bibKartennummer);
 		double userBetrag = benutzer.getGebühren();

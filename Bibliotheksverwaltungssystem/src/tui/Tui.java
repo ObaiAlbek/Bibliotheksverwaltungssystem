@@ -84,7 +84,9 @@ public class Tui {
         System.out.println("8. Gebühren verbuchen (Admin)");
         System.out.println("0. Programm beenden");
     }
-
+    
+    
+    // Aktion: 1
     private void registrierenProzess() {
         System.out.println("<< Registrierung >>");
 
@@ -107,7 +109,8 @@ public class Tui {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-
+    
+    // Aktion: 2
     private void anmeldenProzess() {
         System.out.println("<< Anmeldung >>");
 
@@ -123,7 +126,8 @@ public class Tui {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-
+    
+    // Aktion: 3
     private void mediumDurchsuchenProzess() {
         System.out.println("<< Medien durchsuchen >>");
         System.out.print("Suchkriterium (z. B. Titel, Medienart): ");
@@ -133,12 +137,14 @@ public class Tui {
         String bibKartennummer = eingabe.nextLine();
 
         try {
-            fassade.mediumDurchsuchen(auswahl, bibKartennummer);
+           ArrayList<String> treffer =  fassade.mediumDurchsuchen(auswahl, bibKartennummer);
+           treffer.forEach(System.out::println);
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-
+    
+    // Aktion: 4
     private void mediumAusleihenProzess() {
         System.out.println("<< Medium ausleihen >>");
 
@@ -149,12 +155,14 @@ public class Tui {
         String eindeutigeKennung = eingabe.nextLine();
 
         try {
-            System.out.println(fassade.mediumAusleihen(kartennummer, eindeutigeKennung));
+        	double gebühren = fassade.mediumAusleihen(kartennummer, eindeutigeKennung);
+            System.out.println("Akteulle Gebühren= " + gebühren);
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-
+    
+    // Aktion: 5
     private void mediumsRückgabeProzess() {
         System.out.println("<< Medium zurückgeben >>");
 
@@ -163,8 +171,7 @@ public class Tui {
 
         try {
             ArrayList<String> ausgelieheneMedien = fassade.medienRückgabe(eindeutigeKennung);
-            System.out.println("Medium erfolgreich zurückgegeben.");
-
+            System.out.println("Medium erfolgreich zurückgegeben.");  
             if (ausgelieheneMedien.isEmpty()) 
                 System.out.println("Sie haben keine weiteren ausgeliehenen Medien.");
             else {
@@ -175,7 +182,26 @@ public class Tui {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
+    
+    // Aktion: 6
+    private void zeigeAusgelieheneGegenstände() {
+        System.out.println("<< Ausgeliehene Gegenstände anzeigen >>");
 
+        System.out.print("BibKartennummer: ");
+        String bibKartennummer = eingabe.nextLine();
+
+        try {
+          ArrayList<String> treffer = fassade.ausgeliehenGegenstände(bibKartennummer);
+          if (treffer.size() == 0)
+        	  System.out.println("Sie haben keine ausgeliehen Medien");
+          else
+        	  treffer.forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println("Fehler: " + e.getMessage());
+        }
+    }
+    
+    // Aktion: 7
     private void mediumsVerlängernProzess() {
         System.out.println("<< Leihfrist verlängern >>");
 
@@ -193,28 +219,18 @@ public class Tui {
         }
     }
 
-    private void zeigeAusgelieheneGegenstände() {
-        System.out.println("<< Ausgeliehene Gegenstände anzeigen >>");
-
-        System.out.print("BibKartennummer: ");
-        String bibKartennummer = eingabe.nextLine();
-
-        try {
-           // fassade.zeigeAusgelieheneGegenstände(bibKartennummer);
-        } catch (Exception e) {
-            System.out.println("Fehler: " + e.getMessage());
-        }
-    }
-
+    //Aktion: 8
     private void verbucheGebührenProzess() {
         System.out.println("<< Gebühren verbuchen >>");
 
         System.out.print("BibKartennummer des Nutzers: ");
         String bibKartennummer = eingabe.nextLine();
+        System.out.println("Geben Sie bitte den Betrag: ");
+        double betrag = eingabe.nextInt();
 
         try {
-           // fassade.verbucheGebühren(bibKartennummer);
-            System.out.println("Gebühren erfolgreich verbucht.");
+            if (fassade.gebührenBezahlen(betrag,bibKartennummer))
+            	System.out.println("Gebühren erfolgreich verbucht.");
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
