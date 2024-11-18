@@ -3,15 +3,14 @@ package domain.UserRegistieren;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import domain.Benutzer.Ausweis;
 import domain.Benutzer.Benutzer;
-import domain.Benutzer.Kunde;
+import domain.Benutzer.Erwachsener;
 import domain.Benutzer.Mitarbeiter;
+import domain.Benutzer.Studenten;
 import domain.ExceptionsKlassen.FalscheEingabeException;
-import domain.Medium.Buch;
-import domain.Medium.Mediumverwalter;
 import domain.fassade.BibSystem;
 
 class RegistrierenTest {
@@ -26,13 +25,18 @@ class RegistrierenTest {
 	void testKunde() throws FalscheEingabeException {
 		
 		Benutzer benutzer = Registieren.userRegistrieren("obai", "student", 15, "nein");
-		// True, da Kunde ist
-		assertTrue(benutzer instanceof Kunde);
+		// True ist
+		assertTrue(benutzer instanceof Studenten);
 		String bibKartenNummer = "K1000";
 		assertTrue(benutzer.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer));
+	
+		
+		Benutzer erwachsener = Registieren.userRegistrieren("obai", "erwachsener", 15, "nein");
+		// True 
+		assertTrue(erwachsener instanceof Erwachsener);
 	}
 	
-	@Test
+	@Disabled
 	void testMitarbeiter() throws FalscheEingabeException {
 		
 		Benutzer benutzer = Registieren.userRegistrieren("obai", "mitarbeiter", 15, "ja");

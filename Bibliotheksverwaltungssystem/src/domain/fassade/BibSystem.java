@@ -21,7 +21,7 @@ public class BibSystem {
 		this.medien = new HashMap<>();
 		this.ausleiheSystem = new AusleiheSystem(medien);
 		this.ausleihe = new ArrayList<>();
-		bibAdmin = new Mitarbeiter(new Ausweis("A"),"XY Müller",20,false);
+		this.bibAdmin = new Mitarbeiter(new Ausweis("A"),"Xy Müller",20,false);
 		mediumsAufladen();
 	}
 	
@@ -68,15 +68,6 @@ public class BibSystem {
 		return treffer;
 	}
 	
-	public ArrayList<String> ausgeliehenGegenstände(String bibKartennummer) throws BenutzerNichtGefundenException{
-		Benutzer bibUser = findeBenutzer(bibKartennummer);
-		ArrayList<String> treffer = new ArrayList<>();
-		for (Ausleihe ausleihe:bibUser.getAusgeliehenenMedien())
-			treffer.add(ausleihe.toString());
-		
-		return treffer;
-		
-	}
 	
 	/*
 	 * 	Aufgaben des Leihsystems:
@@ -106,16 +97,35 @@ public class BibSystem {
 		Benutzer benutzer = findeBenutzer(bibKartennummer);
 		return ausleiheSystem.medienVerlängern(benutzer,eindeutigeKennung);
 	}
+		
+	// Admin meldet sich an
+	public boolean adminAnmelden(String bibKartennummerAdmin){
+		this.bibAdmin.anmelden();		
+		return this.bibAdmin.isAngemeldet();
+	}
 	
-	// gebühren Bezahlen
-	public boolean gebührenBezahlen(double betrag, String bibKartennummer) throws BenutzerNichtGefundenException {
+	
+	// aktuelle Gebühren der Benutzer
+	public double getgbührenBenutzer(String bibKartennummer) throws BenutzerNichtGefundenException {
 		Benutzer benutzer = findeBenutzer(bibKartennummer);
-		double userBetrag = benutzer.getGebühren();
-		if (betrag == userBetrag ) {
-			((Mitarbeiter)bibAdmin).gebührVerbuchen(benutzer);
-			return true;
-		}
-		return false;
+		return benutzer.getGebühren();
+	}
+	
+	// akteulle ausgelihene Mediums der Benutzer
+	public ArrayList<String> ausgeliehenGegenstände(String bibKartennummer) throws BenutzerNichtGefundenException {
+		Benutzer bibUser = findeBenutzer(bibKartennummer);
+		ArrayList<String> treffer = new ArrayList<>();
+		for (Ausleihe ausleihe : bibUser.getAusgeliehenenMedien())
+			treffer.add(ausleihe.toString());
+
+		return treffer;
+
+	}
+	
+	public double gebührenVerbuchen(String bibKartennummer) throws BenutzerNichtGefundenException {
+		Benutzer bibUser = findeBenutzer(bibKartennummer);
+		((Mitarbeiter)this.bibAdmin).gebührVerbuchen(bibUser);
+		return bibUser.getGebühren();
 	}
 	
 	// Mediums Rückgabe 
@@ -123,6 +133,7 @@ public class BibSystem {
 		return ausleiheSystem.mediumRückgabe(ausleihe, eindeutigeKennung);
 	}
 	
+	// Simuliere Datum
 	public double datumÄndern(String eindeutigeKennung,String ausleiheBeginn, String ausleiheEnde,String datum) throws MediumNichtGefundenException {
 		return ausleiheSystem.SimulieremediumRückgabe(ausleihe, eindeutigeKennung, ausleiheBeginn, ausleiheEnde, datum);
 	}
@@ -193,10 +204,12 @@ public class BibSystem {
 	}
 
 	private boolean checkIfUserImSystemAngemeldetIst(String bibKartenNummer) {
-		return alleBibBenutzer.stream().anyMatch(user -> user.isAngemeldet());
+		return alleBibBenutzer.stream()
+		.filter(b -> b.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer))
+		 .anyMatch(user -> user.isAngemeldet());
 	}
 
-	private Benutzer findeBenutzer(String bibKartenNummer) throws BenutzerNichtGefundenException {
+	public Benutzer findeBenutzer(String bibKartenNummer) throws BenutzerNichtGefundenException {
 		return alleBibBenutzer.stream()
 				.filter(k -> k.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer)).findFirst()
 				.orElseThrow(() -> new BenutzerNichtGefundenException(

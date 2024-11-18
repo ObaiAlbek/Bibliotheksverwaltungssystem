@@ -59,6 +59,9 @@ public class Tui {
                     case "8":
                         verbucheGebührenProzess();
                         break;
+                    case "9":
+                    	datumÄndern();
+                    	break;
                     case "0":
                         programmIstAktiv = false;
                         System.out.println("Programm beendet.");
@@ -82,6 +85,7 @@ public class Tui {
         System.out.println("6. Ausgeliehene Gegenstände anzeigen");
         System.out.println("7. Leihfrist verlängern");
         System.out.println("8. Gebühren verbuchen (Admin)");
+        System.out.println("9. Datum ändern");
         System.out.println("0. Programm beenden");
     }
     
@@ -223,17 +227,80 @@ public class Tui {
     private void verbucheGebührenProzess() {
         System.out.println("<< Gebühren verbuchen >>");
 
-        System.out.print("BibKartennummer des Nutzers: ");
+        System.out.print("BibKartennummer des Admins: ");
         String bibKartennummer = eingabe.nextLine();
-        System.out.println("Geben Sie bitte den Betrag: ");
-        double betrag = eingabe.nextInt();
-
+        
         try {
-            if (fassade.gebührenBezahlen(betrag,bibKartennummer))
-            	System.out.println("Gebühren erfolgreich verbucht.");
+            if (fassade.adminAnmelden(bibKartennummer)) {
+            	System.out.println("Erfolgreich Angemeldt");
+            	System.out.println("Welche Aktion: ");
+            	System.out.println("1.Betrag verbuchen");
+            	System.out.println("2.ausgeliehene Mediums anzeigen");
+            	System.out.println("3.aktuelles Betrag anzeigen");
+            	System.out.print(">");
+            	String auswahl = eingabe.nextLine();
+            	String userID = eingabe.nextLine();
+            	
+            	switch (auswahl) {
+            		case "1":
+            			System.out.println(fassade.gebührenVerbuchen(userID));
+            			break;
+            		
+            		case "2":
+            			ArrayList<String> treffer = fassade.ausgeliehenGegenstände(userID);
+            			treffer.forEach(System.out::println);
+            			break;
+            		
+            		case "3":
+            			System.out.println(fassade.getgbührenBenutzer(userID));
+            			break;
+            		default:
+            			System.out.println("Falsche Eingabe");
+            	}
+            }
+            	
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
+    }
+    
+    // Aktion 9
+    private void datumÄndern() {
+    	System.out.println("1.Jahresgebühren");
+    	System.out.println("2.Ausleihefristen");
+    	String auswahl = eingabe.nextLine();
+    	
+    	switch (auswahl) {
+    		case "1":
+				try {
+					System.out.println("Bibkartennummer:");
+	    	    	String bibkartennummer = eingabe.nextLine();
+	    	    	System.out.println("Datum: ");
+	    	    	String datum = eingabe.nextLine();
+					fassade.jahresGebührenBerechnen(bibkartennummer, datum);
+				} catch (BenutzerNichtGefundenException e) {
+					e.printStackTrace();
+				}
+				break;
+    		case "2":
+    			
+			try {
+				System.out.println("Bibkartennummer:");
+    	    	String bibkartennummer = eingabe.nextLine();    	
+    	    	System.out.println("AusleihBeginn: ");
+    	    	String ausleihbeginn = eingabe.nextLine();
+    	    	System.out.println("AusleihEnde: ");
+    	    	String ausleihEnde = eingabe.nextLine();
+    	    	System.out.println("Datum vom heute: ");
+    	    	String heutigesDatum = eingabe.nextLine();
+    	    	System.out.println("Medium ID: ");
+    	    	String mediumID = eingabe.nextLine();
+				fassade.datumÄndern(mediumID, ausleihEnde, ausleihEnde, heutigesDatum);
+			} catch (MediumNichtGefundenException e) {
+				System.out.println("Fehler: " + e.getMessage());
+			}
+    	    	
+    	}
     }
 }
 

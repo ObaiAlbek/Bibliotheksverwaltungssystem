@@ -9,7 +9,7 @@ public class Mitarbeiter extends Benutzer {
 	@Override
 	public double getJahresgebühren() {
 	
-		return 50.0;
+		return 0.0;
 	}
 	
 	 public void gebührVerbuchen(Benutzer benutzer) {

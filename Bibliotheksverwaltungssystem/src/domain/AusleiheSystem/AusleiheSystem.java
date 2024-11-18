@@ -38,7 +38,8 @@ public class AusleiheSystem {
 
 	public ArrayList<String> mediumRückgabe(ArrayList<Ausleihe> ausleihe, String eindeutigeKennung) {
 		Ausleihe ausgelieheneMedium = ausleihe.stream()
-				.filter(k -> k.getMediumverwalter().getMedium().getID().equalsIgnoreCase(eindeutigeKennung)).findFirst()
+				.filter(k -> k.getMediumverwalter().getMedium().getID().equalsIgnoreCase(eindeutigeKennung))
+				.findFirst()
 				.orElse(null);
 
 		ArrayList<String> ausgeliehenMedien = new ArrayList<>();
