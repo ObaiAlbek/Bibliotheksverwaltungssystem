@@ -1,7 +1,11 @@
 package domain.Bibliothekskatalog;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import domain.AusleiheSystem.Ausleihe;
 import domain.Medium.*;
 
 public class Mediensuchen {
@@ -60,14 +64,25 @@ public class Mediensuchen {
 						.filter(t -> t.getValue().getMedium() instanceof Videospiel)
 						.map(t -> t.getValue().getMedium())
 						.map(t -> ((Videospiel)t))
-						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
+						.map(t -> "Eindutige Kennung= " + t.toString())
+						.collect(Collectors.toCollection(ArrayList::new));
 			
 			default:
 				return null;
 				
 		}
+
+	}
+	
+	public Collection<String> baldVerfügbareMedien(ArrayList<Ausleihe> ausleihe) {
+		LocalDate heutigesDatum = LocalDate.now();
 		
-		
+		return ausleihe.stream()
+		.filter(t -> t.getAusleiheEnde().until(heutigesDatum, ChronoUnit.DAYS) <= 3)
+		.map(t -> t.getMediumverwalter())
+		.map(t -> t.toString())
+		.collect(Collectors.toCollection(ArrayList::new));
 		
 	}
+	
 }

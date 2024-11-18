@@ -134,13 +134,18 @@ public class Tui {
     // Aktion: 3
     private void mediumDurchsuchenProzess() {
         System.out.println("<< Medien durchsuchen >>");
-        System.out.print("Suchkriterium (z. B. Titel, Medienart): ");
+        System.out.print("Suchkriterium (z. B. Titel, Medienart, Ausgeliehen, nicht Ausgeliehen,Medien die bald wieder verügbar sind (ja/nein)): ");
         String auswahl = eingabe.nextLine();
 
         System.out.print("BibKartennummer: ");
         String bibKartennummer = eingabe.nextLine();
 
         try {
+        	if (auswahl.equalsIgnoreCase("Medienart")) {
+        		System.out.println("Bücher, Brettspiele, Dvds, Cds, Videospiele");
+        		auswahl = eingabe.nextLine();
+        	}
+        		
            ArrayList<String> treffer =  fassade.mediumDurchsuchen(auswahl, bibKartennummer);
            treffer.forEach(System.out::println);
         } catch (Exception e) {

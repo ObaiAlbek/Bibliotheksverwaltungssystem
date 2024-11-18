@@ -41,8 +41,10 @@ public class BibSystem {
 	
 	
 	// Mediums Durchsuchen
-	public ArrayList<String> mediumDurchsuchen(String auswahl, String bibKartenNummer) throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException {
-		if (!checkIfUserImSystemAngemeldetIst(bibKartenNummer))
+	public ArrayList<String> mediumDurchsuchen(String auswahl, String bibKartenNummer) throws FalscheEingabeException, MediumNichtGefundenException, BenutzerNichtAngemeldetException, BenutzerNichtGefundenException {
+		Benutzer benutzer = findeBenutzer(bibKartenNummer);
+		
+		if (benutzer.abmelden())
 			throw new BenutzerNichtAngemeldetException("Sie müssen sich erst im System anmelden");
 
 		ArrayList<String> treffer = new ArrayList<>();
@@ -58,7 +60,11 @@ public class BibSystem {
 				|| auswahl.equalsIgnoreCase("Dvds") || auswahl.equalsIgnoreCase("Cds")
 				|| auswahl.equalsIgnoreCase("Videospiele"))
 			treffer = medienSuchen.medienart(auswahl, medien);
-
+		
+		else if (auswahl.equalsIgnoreCase("ja")) {
+			treffer = baldVerfügbareMedien(ausleihe);
+		}
+			
 		else
 			treffer = medienSuchen.title(auswahl, medien);
 
@@ -83,7 +89,7 @@ public class BibSystem {
 		if (bibBenutzer instanceof Mitarbeiter)
 			throw new Exception("Mitarbeiter können keine Mediums ausleihen!");
 
-		if (!checkIfUserImSystemAngemeldetIst(bibKartenNummer))
+		if (bibBenutzer.abmelden())
 			throw new BenutzerNichtAngemeldetException("Sie müssen sich erst im System anmelden");
 
 		Ausleihe neueAusleihe = ausleiheSystem.mediumAusleihen(bibBenutzer, eindeutigeKennung);
@@ -203,11 +209,7 @@ public class BibSystem {
 		medien.put(Videospiel.getMedium().getID(), Videospiel);
 	}
 
-	private boolean checkIfUserImSystemAngemeldetIst(String bibKartenNummer) {
-		return alleBibBenutzer.stream()
-		.filter(b -> b.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer))
-		 .anyMatch(user -> user.isAngemeldet());
-	}
+	
 
 	public Benutzer findeBenutzer(String bibKartenNummer) throws BenutzerNichtGefundenException {
 		return alleBibBenutzer.stream()

@@ -75,12 +75,14 @@ public abstract class Benutzer {
 		return angemeldet;
 	}
 
-	public void anmelden() {
+	public boolean anmelden() {
 		this.angemeldet = true;
+		return this.angemeldet;
 	}
 	
-	public void abmelden() {
+	public boolean abmelden() {
 		this.angemeldet = false ;
+		return this.angemeldet;
 	}
 	
 	
