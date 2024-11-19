@@ -1,0 +1,30 @@
+was macht die zeile long überfälligeTage = ausgelieheneMedium.getAusleiheEnde().until(heutigesDatum, ChronoUnit.DAYS);
+
+führt eine Berechnung durch, die die Anzahl der Tage zwischen dem Ausleihende-Datum (getAusleiheEnde()) und dem heutigen Datum (heutigesDatum) bestimmt.
+
+Funktionsweise:
+getAusleiheEnde(): Diese Methode liefert das Datum, an dem die Ausleihe enden sollte. Es wird davon ausgegangen, dass es ein LocalDate-Objekt zurückgibt.
+
+.until(heutigesDatum, ChronoUnit.DAYS): Diese Methode berechnet die Anzahl der Tage von getAusleiheEnde() bis heutigesDatum (heutiges Datum).
+
+Wenn heutigesDatum nach getAusleiheEnde() liegt, ist das Ergebnis positiv und gibt die Anzahl der Tage an, die das Medium überfällig ist.
+Wenn heutigesDatum vor getAusleiheEnde() liegt, ist das Ergebnis negativ, da die Ausleihe noch nicht beendet ist.
+Bedeutung des Ergebnisses:
+Positiver Wert: Die Ausleihe ist um die berechneten Tage überfällig.
+Null: Das heutige Datum ist das gleiche wie das Ende-Datum der Ausleihe.
+Negativer Wert: Die Ausleihe läuft noch, und das Medium ist in |überfälligeTage| Tagen fällig.
+Beispiel:
+Angenommen, heutigesDatum = 2024-11-19 und getAusleiheEnde() = 2024-11-15:
+
+Differenz = 2024-11-15.until(2024-11-19, ChronoUnit.DAYS) = 4
+Das Medium ist 4 Tage überfällig.
+Wenn stattdessen getAusleiheEnde() = 2024-11-22:
+
+Differenz = 2024-11-22.until(2024-11-19, ChronoUnit.DAYS) = -3
+Das Medium ist in 3 Tagen fällig.
+Anwendung:
+Die Variable überfälligeTage kann genutzt werden, um Logik zu implementieren wie:
+
+Zusätzliche Gebühren für überfällige Medien.
+Erinnerungen für Nutzer bei bevorstehenden Fälligkeiten.
+Filtern von Ausleihen, die überfällig oder bald fällig sind.
