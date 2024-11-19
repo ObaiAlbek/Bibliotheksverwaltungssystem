@@ -74,7 +74,7 @@ public class Mediensuchen {
 
 	}
 	
-	public Collection<String> baldVerfügbareMedien(ArrayList<Ausleihe> ausleihe) {
+	public ArrayList<String> baldVerfügbareMedien(ArrayList<Ausleihe> ausleihe) {
 		LocalDate heutigesDatum = LocalDate.now();
 		
 		return ausleihe.stream()

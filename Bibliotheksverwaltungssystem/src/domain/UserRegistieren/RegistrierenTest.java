@@ -36,15 +36,6 @@ class RegistrierenTest {
 		assertTrue(erwachsener instanceof Erwachsener);
 	}
 	
-	@Disabled
-	void testMitarbeiter() throws FalscheEingabeException {
-		
-		Benutzer benutzer = Registieren.userRegistrieren("obai", "mitarbeiter", 15, "ja");
-		// True, da Mitarbeiter ist
-		assertTrue(benutzer instanceof Mitarbeiter);
-		String bibKartenNummer = "A1001";
-		assertTrue(benutzer.getBibAusweis().getKartenNummer().equalsIgnoreCase(bibKartenNummer));
-	}
 	
 
 

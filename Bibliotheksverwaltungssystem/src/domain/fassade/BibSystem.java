@@ -62,7 +62,7 @@ public class BibSystem {
 			treffer = medienSuchen.medienart(auswahl, medien);
 		
 		else if (auswahl.equalsIgnoreCase("ja")) {
-			treffer = baldVerfügbareMedien(ausleihe);
+			treffer = medienSuchen.baldVerfügbareMedien(ausleihe);
 		}
 			
 		else
@@ -103,8 +103,21 @@ public class BibSystem {
 		Benutzer benutzer = findeBenutzer(bibKartennummer);
 		return ausleiheSystem.medienVerlängern(benutzer,eindeutigeKennung);
 	}
+	
+	// Mediums Rückgabe 
+		public ArrayList<String> medienRückgabe(String eindeutigeKennung) {
+			return ausleiheSystem.mediumRückgabe(ausleihe, eindeutigeKennung);
+	}
+	
+	/* Admin Methoden:
+	 * 	1. Anmeldung
+	 *  2. Gebühren des BibBenutzers anzeigen
+	 *  3. Gebühren verbuchen
+	 *  4. akteulle ausgelihene Mediums der Benutzer anzeigen
+	 * 
+	 */
 		
-	// Admin meldet sich an
+	// Anmeldung
 	public boolean adminAnmelden(String bibKartennummerAdmin){
 		this.bibAdmin.anmelden();		
 		return this.bibAdmin.isAngemeldet();
@@ -128,16 +141,13 @@ public class BibSystem {
 
 	}
 	
-	public double gebührenVerbuchen(String bibKartennummer) throws BenutzerNichtGefundenException {
+	public boolean gebührenVerbuchen(String bibKartennummer) throws BenutzerNichtGefundenException {
 		Benutzer bibUser = findeBenutzer(bibKartennummer);
 		((Mitarbeiter)this.bibAdmin).gebührVerbuchen(bibUser);
-		return bibUser.getGebühren();
+		return bibUser.getGebühren() == 0.0;
 	}
 	
-	// Mediums Rückgabe 
-	public ArrayList<String> medienRückgabe(String eindeutigeKennung) {
-		return ausleiheSystem.mediumRückgabe(ausleihe, eindeutigeKennung);
-	}
+	
 	
 	// Simuliere Datum
 	public double datumÄndern(String eindeutigeKennung,String ausleiheBeginn, String ausleiheEnde,String datum) throws MediumNichtGefundenException {

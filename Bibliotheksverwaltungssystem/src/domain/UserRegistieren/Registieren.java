@@ -20,9 +20,9 @@ public class Registieren {
 				ausweis = new Ausweis("K");
 				benutzer = new Erwachsener(ausweis,name,alter,admin);
 			}
-			else if (type.equalsIgnoreCase("Mitarbeiter")) {
+			else if (type.equalsIgnoreCase("mitarbeiter")) {
 				ausweis = new Ausweis("A");
-				benutzer = new Erwachsener(ausweis,name,alter,admin);
+				benutzer = new Mitarbeiter(ausweis,name,alter,admin);
 			}
 			else
 				throw new FalscheEingabeException("Falsche Eingabe");
