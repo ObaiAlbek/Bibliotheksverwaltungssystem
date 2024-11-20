@@ -1,12 +1,12 @@
 package domain.fassade;
 
 import java.util.*;
-import domain.AusleiheSystem.*;
-import domain.Benutzer.*;
-import domain.Bibliothekskatalog.Mediensuchen;
-import domain.ExceptionsKlassen.*;
-import domain.Medium.*;
-import domain.UserRegistieren.Registieren;
+
+import domain.ausleihSystem.*;
+import domain.benutzer.*;
+import domain.bibliothekskatalog.Mediensuchen;
+import domain.exceptionsKlassen.*;
+import domain.medium.*;
 
 public class BibSystem {
 	private ArrayList<Benutzer> alleBibBenutzer;
@@ -215,7 +215,7 @@ public class BibSystem {
 		Mediumverwalter buchIStNichtAusgeliehen = new Mediumverwalter(new Buch("BG001", "Javascript lenren", 2018, "Joshua Bloch"),true, 10, 28);
 		medien.put(buchIStNichtAusgeliehen.getMedium().getID(), buchIStNichtAusgeliehen);
 
-		Mediumverwalter Videospiel = new Mediumverwalter(new Videospiel("BG00122", "The Legend of Zelda: Breath of the Wild", 2017, "Nintendo Switch"),true, 2, 28);
+		Mediumverwalter Videospiel = new Mediumverwalter(new Videospiel("BG00122", "The Legend of Zelda: Breath of the Wild", 2017, "Nintendo Switch"),false, 2, 28);
 		medien.put(Videospiel.getMedium().getID(), Videospiel);
 	}
 

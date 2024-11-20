@@ -1,0 +1,54 @@
+public ArrayList<String> medienart(String medienart, HashMap<String,Mediumverwalter> medien) {
+		switch(medienart) {
+			case "Bücher":
+				return medien.entrySet().stream()
+						.filter(t -> t.getValue().getMedium() instanceof Buch)
+						.map(t -> t.getValue().getMedium())
+						.map(t -> ((Buch)t))
+						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
+				
+			case "Brettspiele":
+				return medien.entrySet().stream()
+						.filter(t -> t.getValue().getMedium() instanceof Brettspiel)
+						.map(t -> t.getValue().getMedium())
+						.map(t -> ((Brettspiel)t))
+						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
+				
+			case "Dvds":
+				return medien.entrySet().stream()
+						.filter(t -> t.getValue().getMedium() instanceof Dvd)
+						.map(t -> t.getValue().getMedium())
+						.map(t -> ((Dvd)t))
+						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
+				
+			case "Cds":
+				return medien.entrySet().stream()
+						.filter(t -> t.getValue().getMedium() instanceof Cd)
+						.map(t -> t.getValue().getMedium())
+						.map(t -> ((Cd)t))
+						.map(t -> "Eindutige Kennung= " + t.toString()).collect(Collectors.toCollection(ArrayList::new));
+				
+			case "Videospiele":
+				return medien.entrySet().stream()
+						.filter(t -> t.getValue().getMedium() instanceof Videospiel)
+						.map(t -> t.getValue().getMedium())
+						.map(t -> ((Videospiel)t))
+						.map(t -> "Eindutige Kennung= " + t.toString())
+						.collect(Collectors.toCollection(ArrayList::new));
+			
+			default:
+				return null;
+				
+		}
+
+	}
+	
+
+kann man das Code igrendwoie zusammenfassung??
+
+
+Antwort:
+a, dein Code kann stark vereinfacht und zusammengefasst werden, indem du redundante Codeblöcke vermeidest. Alle case-Blöcke folgen demselben Muster. Du kannst die Class-Objekte (wie Buch.class, Brettspiel.class, etc.) als Parameter verwenden, um den Vergleich dynamisch zu gestalten.
+
+Hier ist die überarbeitete und zusammengefasste Version:
+Zusammenfassung des Codes

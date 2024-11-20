@@ -1,6 +1,6 @@
 package main;
 
-import domain.ExceptionsKlassen.*;
+import domain.exceptionsKlassen.*;
 import tui.Tui;
 
 public class Main {

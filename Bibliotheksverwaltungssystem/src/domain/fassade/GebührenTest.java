@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.Benutzer.Benutzer;
-import domain.ExceptionsKlassen.BenutzerNichtGefundenException;
-import domain.ExceptionsKlassen.FalscheEingabeException;
+import domain.benutzer.Benutzer;
+import domain.exceptionsKlassen.BenutzerNichtGefundenException;
+import domain.exceptionsKlassen.FalscheEingabeException;
 
 class GebührenTest {
 

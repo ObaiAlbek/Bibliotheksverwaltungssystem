@@ -3,9 +3,9 @@ package tui;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import MedienHinzüfugen.MedienHinzufügen;
-import domain.ExceptionsKlassen.*;
+import domain.exceptionsKlassen.*;
 import domain.fassade.BibSystem;
+import medienHinzüfugen.MedienHinzufügen;
 
 public class Tui {
     private BibSystem fassade;
