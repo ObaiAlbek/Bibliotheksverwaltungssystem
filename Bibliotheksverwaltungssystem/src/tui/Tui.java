@@ -7,11 +7,28 @@ import domain.exceptionsKlassen.*;
 import domain.fassade.BibSystem;
 import medienHinzüfugen.MedienHinzufügen;
 
+/**
+ * Einfache Text-UI (TUI) für das Bibliothekssystem.
+ * Bietet Registrierung, Anmeldung, Suche, Ausleihe, Rückgabe, Verlängerung, Gebührenfunktionen und Datums-Simulation.
+ *
+ * author Obai
+ * version 1.0
+ * since 1.0
+ */
 public class Tui {
-    private BibSystem fassade;
-    private Scanner eingabe;
-    private MedienHinzufügen mediumsHinzufügen;
 
+    /** Fassade des Bibliothekssystems. */
+    private final BibSystem fassade;
+
+    /** Scanner für Benutzereingaben. */
+    private final Scanner eingabe;
+
+    /** Submenü zum Hinzufügen neuer Medien. */
+    private final MedienHinzufügen mediumsHinzufügen;
+
+    /**
+     * Startet die TUI und initialisiert ein neues System.
+     */
     public Tui() {
         this.fassade = new BibSystem();
         this.eingabe = new Scanner(System.in);
@@ -25,49 +42,34 @@ public class Tui {
         }
     }
 
+    /**
+     * Haupt-Loop des Programms.
+     */
     private void startBibProgramm() {
         boolean programmIstAktiv = true;
 
         while (programmIstAktiv) {
             zeigeHauptmenü();
             System.out.print("> ");
-            String aktion = eingabe.nextLine();
+            String aktion = eingabe.nextLine().trim();
 
             try {
                 switch (aktion) {
-                    case "1":
-                        registrierenProzess();
-                        break;
-                    case "2":
-                        anmeldenProzess();
-                        break;
-                    case "3":
-                        mediumDurchsuchenProzess();
-                        break;
-                    case "4":
-                        mediumAusleihenProzess();
-                        break;
-                    case "5":
-                        mediumsRückgabeProzess();
-                        break;
-                    case "6":
-                        zeigeAusgelieheneGegenstände();
-                        break;
-                    case "7":
-                        mediumsVerlängernProzess();
-                        break;
-                    case "8":
-                        verbucheGebührenProzess();
-                        break;
-                    case "9":
-                    	datumÄndern();
-                    	break;
-                    case "0":
+                    case "1" -> registrierenProzess();
+                    case "2" -> anmeldenProzess();
+                    case "3" -> mediumDurchsuchenProzess();
+                    case "4" -> mediumAusleihenProzess();
+                    case "5" -> mediumsRückgabeProzess();
+                    case "6" -> zeigeAusgelieheneGegenstände();
+                    case "7" -> mediumsVerlängernProzess();
+                    case "8" -> verbucheGebührenProzess();
+                    case "9" -> datumÄndern();
+                    case "10" -> mediumsHinzufügen.start(); // optionales Menü zum Medien-Hinzufügen
+                    case "0" -> {
                         programmIstAktiv = false;
                         System.out.println("Programm beendet.");
-                        break;
-                    default:
-                        System.out.println("Ungültige Eingabe. Bitte wählen Sie eine gültige Option.");
+                    }
+                    default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine gültige Option.");
                 }
             } catch (Exception e) {
                 System.out.println("Fehler: " + e.getMessage());
@@ -75,6 +77,9 @@ public class Tui {
         }
     }
 
+    /**
+     * Zeigt das Hauptmenü.
+     */
     private void zeigeHauptmenü() {
         System.out.println("\nHauptmenü:");
         System.out.println("1. Registrieren");
@@ -85,26 +90,30 @@ public class Tui {
         System.out.println("6. Ausgeliehene Gegenstände anzeigen");
         System.out.println("7. Leihfrist verlängern");
         System.out.println("8. Gebühren verbuchen (Admin)");
-        System.out.println("9. Datum ändern");
+        System.out.println("9. Datum ändern (Simulation)");
+        System.out.println("10. Neues Medium hinzufügen");
         System.out.println("0. Programm beenden");
     }
-    
-    
-    // Aktion: 1
+
+    /**
+     * Registrierung eines Benutzers.
+     * Erfordert: name, alter, type (schüler/student/erwachsener/mitarbeiter), istAdmin (ja/nein).
+     */
     private void registrierenProzess() {
         System.out.println("<< Registrierung >>");
 
         System.out.print("Name: ");
-        String name = eingabe.nextLine();
+        String name = eingabe.nextLine().trim();
 
         System.out.print("Alter: ");
-        int alter = Integer.parseInt(eingabe.nextLine());
+        String alterStr = eingabe.nextLine().trim();
+        int alter = Integer.parseInt(alterStr);
 
-        System.out.print("Sind Sie Schüler oder Student? (Ja/Nein): ");
-        String type = eingabe.nextLine();
+        System.out.print("Benutzertyp (schüler / student / erwachsener / mitarbeiter): ");
+        String type = eingabe.nextLine().trim();
 
-        System.out.print("Sind Sie ein Admin? (Ja/Nein): ");
-        String istAdmin = eingabe.nextLine();
+        System.out.print("Sind Sie ein Admin? (ja/nein): ");
+        String istAdmin = eingabe.nextLine().trim();
 
         try {
             fassade.userRegistrieren(name, type, alter, istAdmin);
@@ -113,77 +122,81 @@ public class Tui {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-    
-    // Aktion: 2
+
+    /**
+     * Anmeldung eines Benutzers per Kartennummer.
+     */
     private void anmeldenProzess() {
         System.out.println("<< Anmeldung >>");
-
         System.out.print("Kartennummer: ");
-        String kartennummer = eingabe.nextLine();
+        String kartennummer = eingabe.nextLine().trim();
 
         try {
-           {
-        	   double gebühren = fassade.userAnmelden(kartennummer);
-               System.out.println("Erfolgreich angemeldet.\n" + "Gebühren= " + gebühren);
-            }
+            double gebühren = fassade.userAnmelden(kartennummer);
+            System.out.println("Erfolgreich angemeldet. Gebühren= " + gebühren);
         } catch (BenutzerNichtGefundenException e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-    
-    // Aktion: 3
+
+    /**
+     * Medien durchsuchen (Titel, Medienart, ausgeliehen/nicht ausgeliehen, bald verfügbar).
+     */
     private void mediumDurchsuchenProzess() {
         System.out.println("<< Medien durchsuchen >>");
-        System.out.print("Suchkriterium (z. B. Titel, Medienart, Ausgeliehen, nicht Ausgeliehen,Medien die bald wieder verügbar sind (ja/nein)): ");
-        String auswahl = eingabe.nextLine();
+        System.out.print("Suchkriterium (Titel ODER: ausgeliehen / nicht ausgeliehen / Medienart / bald verfügbar (ja)): ");
+        String auswahl = eingabe.nextLine().trim();
+
+        if (auswahl.equalsIgnoreCase("Medienart")) {
+            System.out.println("Geben Sie eine Medienart ein: Bücher, Brettspiele, Dvds, Cds, Videospiele");
+            auswahl = eingabe.nextLine().trim();
+        }
 
         System.out.print("BibKartennummer: ");
-        String bibKartennummer = eingabe.nextLine();
+        String bibKartennummer = eingabe.nextLine().trim();
 
         try {
-        	if (auswahl.equalsIgnoreCase("Medienart")) {
-        		System.out.println("Bücher, Brettspiele, Dvds, Cds, Videospiele");
-        		auswahl = eingabe.nextLine();
-        	}
-        		
-           ArrayList<String> treffer =  fassade.mediumDurchsuchen(auswahl, bibKartennummer);
-           treffer.forEach(System.out::println);
+            ArrayList<String> treffer = fassade.mediumDurchsuchen(auswahl, bibKartennummer);
+            treffer.forEach(System.out::println);
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-    
-    // Aktion: 4
+
+    /**
+     * Medium ausleihen.
+     */
     private void mediumAusleihenProzess() {
         System.out.println("<< Medium ausleihen >>");
 
         System.out.print("Kartennummer: ");
-        String kartennummer = eingabe.nextLine();
+        String kartennummer = eingabe.nextLine().trim();
 
         System.out.print("Eindeutige Kennung des Mediums: ");
-        String eindeutigeKennung = eingabe.nextLine();
+        String eindeutigeKennung = eingabe.nextLine().trim();
 
         try {
-        	double gebühren = fassade.mediumAusleihen(kartennummer, eindeutigeKennung);
-            System.out.println("Akteulle Gebühren= " + gebühren);
+            double gebühren = fassade.mediumAusleihen(kartennummer, eindeutigeKennung);
+            System.out.println("Aktuelle Gebühren= " + gebühren);
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-    
-    // Aktion: 5
+
+    /**
+     * Medium zurückgeben.
+     */
     private void mediumsRückgabeProzess() {
         System.out.println("<< Medium zurückgeben >>");
-
         System.out.print("Eindeutige Kennung des Mediums: ");
-        String eindeutigeKennung = eingabe.nextLine();
+        String eindeutigeKennung = eingabe.nextLine().trim();
 
         try {
             ArrayList<String> ausgelieheneMedien = fassade.medienRückgabe(eindeutigeKennung);
-            System.out.println("Medium erfolgreich zurückgegeben.");  
-            if (ausgelieheneMedien.isEmpty()) 
+            System.out.println("Medium erfolgreich zurückgegeben.");
+            if (ausgelieheneMedien.isEmpty()) {
                 System.out.println("Sie haben keine weiteren ausgeliehenen Medien.");
-            else {
+            } else {
                 System.out.println("Ihre verbleibenden ausgeliehenen Medien:");
                 ausgelieheneMedien.forEach(System.out::println);
             }
@@ -191,121 +204,129 @@ public class Tui {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-    
-    // Aktion: 6
+
+    /**
+     * Ausgeliehene Gegenstände eines Benutzers anzeigen.
+     */
     private void zeigeAusgelieheneGegenstände() {
         System.out.println("<< Ausgeliehene Gegenstände anzeigen >>");
-
         System.out.print("BibKartennummer: ");
-        String bibKartennummer = eingabe.nextLine();
+        String bibKartennummer = eingabe.nextLine().trim();
 
         try {
-          ArrayList<String> treffer = fassade.ausgeliehenGegenstände(bibKartennummer);
-          if (treffer.size() == 0)
-        	  System.out.println("Sie haben keine ausgeliehen Medien");
-          else
-        	  treffer.forEach(System.out::println);
+            ArrayList<String> treffer = fassade.ausgeliehenGegenstände(bibKartennummer);
+            if (treffer.isEmpty()) {
+                System.out.println("Sie haben keine ausgeliehenen Medien.");
+            } else {
+                treffer.forEach(System.out::println);
+            }
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-    
-    // Aktion: 7
+
+    /**
+     * Leihfrist verlängern.
+     */
     private void mediumsVerlängernProzess() {
         System.out.println("<< Leihfrist verlängern >>");
 
         System.out.print("BibKartennummer: ");
-        String bibKartennummer = eingabe.nextLine();
+        String bibKartennummer = eingabe.nextLine().trim();
 
         System.out.print("Eindeutige Kennung des Mediums: ");
-        String eindeutigeKennung = eingabe.nextLine();
+        String eindeutigeKennung = eingabe.nextLine().trim();
 
         try {
-            fassade.medienVerlängern(eindeutigeKennung, bibKartennummer);
-            System.out.println("Leihfrist erfolgreich verlängert.");
+            boolean ok = fassade.medienVerlängern(eindeutigeKennung, bibKartennummer);
+            System.out.println(ok ? "Leihfrist erfolgreich verlängert." : "Verlängerung nicht möglich.");
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
 
-    //Aktion: 8
+    /**
+     * Admin: Gebühren verbuchen / anzeigen / ausgeliehene Medien auflisten.
+     */
     private void verbucheGebührenProzess() {
-        System.out.println("<< Gebühren verbuchen >>");
+        System.out.println("<< Gebühren verbuchen (Admin) >>");
 
         System.out.print("BibKartennummer des Admins: ");
-        String bibKartennummer = eingabe.nextLine();
-        
+        String bibKartennummerAdmin = eingabe.nextLine().trim();
+
         try {
-            if (fassade.adminAnmelden(bibKartennummer)) {
-            	System.out.println("Erfolgreich Angemeldt");
-            	System.out.println("Welche Aktion: ");
-            	System.out.println("1.Betrag verbuchen");
-            	System.out.println("2.ausgeliehene Mediums anzeigen");
-            	System.out.println("3.aktuelles Betrag anzeigen");
-            	System.out.print(">");
-            	String auswahl = eingabe.nextLine();
-            	String userID = eingabe.nextLine();
-            	
-            	switch (auswahl) {
-            		case "1":
-            			System.out.println(fassade.gebührenVerbuchen(userID));
-            			break;
-            		
-            		case "2":
-            			ArrayList<String> treffer = fassade.ausgeliehenGegenstände(userID);
-            			treffer.forEach(System.out::println);
-            			break;
-            		
-            		case "3":
-            			System.out.println(fassade.getgbührenBenutzer(userID));
-            			break;
-            		default:
-            			System.out.println("Falsche Eingabe");
-            	}
+            if (fassade.adminAnmelden(bibKartennummerAdmin)) {
+                System.out.println("Erfolgreich angemeldet.");
+                System.out.println("Welche Aktion: ");
+                System.out.println("1. Betrag verbuchen");
+                System.out.println("2. Ausgeliehene Medien anzeigen");
+                System.out.println("3. Aktuellen Betrag anzeigen");
+                System.out.print("> ");
+                String auswahl = eingabe.nextLine().trim();
+
+                System.out.print("BibKartennummer des Benutzers: ");
+                String userID = eingabe.nextLine().trim();
+
+                switch (auswahl) {
+                    case "1" -> System.out.println(
+                            fassade.gebührenVerbuchen(userID) ? "Gebühren verbucht (0.0)." : "Verbuchen fehlgeschlagen."
+                    );
+                    case "2" -> {
+                        ArrayList<String> treffer = fassade.ausgeliehenGegenstände(userID);
+                        if (treffer.isEmpty()) System.out.println("Keine Ausleihen.");
+                        else treffer.forEach(System.out::println);
+                    }
+                    case "3" -> System.out.println("Gebühren: " + fassade.getgbührenBenutzer(userID));
+                    default -> System.out.println("Falsche Eingabe.");
+                }
             }
-            	
         } catch (Exception e) {
             System.out.println("Fehler: " + e.getMessage());
         }
     }
-    
-    // Aktion 9
+
+    /**
+     * Datumssimulation (Jahresgebühren oder Ausleihfristen).
+     */
     private void datumÄndern() {
-    	System.out.println("1.Jahresgebühren");
-    	System.out.println("2.Ausleihefristen");
-    	String auswahl = eingabe.nextLine();
-    	
-    	switch (auswahl) {
-    		case "1":
-				try {
-					System.out.println("Bibkartennummer:");
-	    	    	String bibkartennummer = eingabe.nextLine();
-	    	    	System.out.println("Datum: ");
-	    	    	String datum = eingabe.nextLine();
-					fassade.jahresGebührenBerechnen(bibkartennummer, datum);
-				} catch (BenutzerNichtGefundenException e) {
-					e.printStackTrace();
-				}
-				break;
-    		case "2":
-    			
-			try {
-				System.out.println("Bibkartennummer:");
-    	    	String bibkartennummer = eingabe.nextLine();    	
-    	    	System.out.println("AusleihBeginn: ");
-    	    	String ausleihbeginn = eingabe.nextLine();
-    	    	System.out.println("AusleihEnde: ");
-    	    	String ausleihEnde = eingabe.nextLine();
-    	    	System.out.println("Datum vom heute: ");
-    	    	String heutigesDatum = eingabe.nextLine();
-    	    	System.out.println("Medium ID: ");
-    	    	String mediumID = eingabe.nextLine();
-				fassade.datumÄndern(mediumID, ausleihEnde, ausleihEnde, heutigesDatum);
-			} catch (MediumNichtGefundenException e) {
-				System.out.println("Fehler: " + e.getMessage());
-			}
-    	    	
-    	}
+        System.out.println("<< Datum ändern (Simulation) >>");
+        System.out.println("1. Jahresgebühren simulieren");
+        System.out.println("2. Ausleihefristen simulieren");
+        System.out.print("> ");
+        String auswahl = eingabe.nextLine().trim();
+
+        switch (auswahl) {
+            case "1" -> {
+                try {
+                    System.out.print("BibKartennummer: ");
+                    String bibkartennummer = eingabe.nextLine().trim();
+                    System.out.print("Datum (yyyy-MM-dd): ");
+                    String datum = eingabe.nextLine().trim();
+                    double betrag = fassade.jahresGebührenBerechnen(bibkartennummer, datum);
+                    System.out.println("Neuer Gebührenstand: " + betrag);
+                } catch (BenutzerNichtGefundenException e) {
+                    System.out.println("Fehler: " + e.getMessage());
+                }
+            }
+            case "2" -> {
+                try {
+                    System.out.print("AusleihBeginn (yyyy-MM-dd): ");
+                    String ausleihbeginn = eingabe.nextLine().trim();
+                    System.out.print("AusleihEnde (yyyy-MM-dd): ");
+                    String ausleihEnde = eingabe.nextLine().trim();
+                    System.out.print("Heutiges Datum (yyyy-MM-dd): ");
+                    String heutigesDatum = eingabe.nextLine().trim();
+                    System.out.print("Medium ID: ");
+                    String mediumID = eingabe.nextLine().trim();
+
+                    // FIX: Reihenfolge & Werte korrekt übergeben (Beginn, Ende)
+                    double geb = fassade.datumÄndern(mediumID, ausleihbeginn, ausleihEnde, heutigesDatum);
+                    System.out.println("Simulierter Gebührenstand: " + geb);
+                } catch (MediumNichtGefundenException e) {
+                    System.out.println("Fehler: " + e.getMessage());
+                }
+            }
+            default -> System.out.println("Ungültige Eingabe.");
+        }
     }
 }
-
