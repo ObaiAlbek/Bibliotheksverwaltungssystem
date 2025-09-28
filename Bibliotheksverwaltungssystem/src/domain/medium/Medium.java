@@ -1,34 +1,72 @@
 package domain.medium;
 
-
+/**
+ * Basisklasse für alle Medientypen.
+ * Enthält ID, Titel und Erscheinungsjahr.
+ *
+ * @author Obai
+ * @version 1.0
+ * @since 1.0
+ */
 public abstract class Medium {
 
-	private String title;
-	private int erscheinungsjahr;
-	private String ID;
+    /** Titel des Mediums. */
+    private String title;
 
-	public Medium(String ID,String title, int erscheinungsjahr) {
-		super();
-		this.title = title;
-		this.erscheinungsjahr = erscheinungsjahr;
-		this.ID = ID;
-	}
+    /** Erscheinungsjahr des Mediums. */
+    private int erscheinungsjahr;
 
-	public String getTitle() {
-		return title;
-	}
+    /** Eindeutige ID des Mediums. */
+    private String ID;
 
-	public int getErscheinungsjahr() {
-		return erscheinungsjahr;
-	}
-	
-	public String getID() {
-		return ID;
-	}
+    /**
+     * Konstruktor.
+     *
+     * @param ID eindeutige Kennung
+     * @param title Titel des Mediums
+     * @param erscheinungsjahr Erscheinungsjahr
+     */
+    public Medium(String ID, String title, int erscheinungsjahr) {
+        super();
+        this.title = title;
+        this.erscheinungsjahr = erscheinungsjahr;
+        this.ID = ID;
+    }
 
-	@Override
-	public String toString() {
-		return  "ID= "+ ID + " ,title=" + title + ", erscheinungsjahr=" + erscheinungsjahr;
-	}
-	
-}	
+    /**
+     * Liefert den Titel.
+     *
+     * @return Titel
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Liefert das Erscheinungsjahr.
+     *
+     * @return Erscheinungsjahr
+     */
+    public int getErscheinungsjahr() {
+        return erscheinungsjahr;
+    }
+
+    /**
+     * Liefert die ID.
+     *
+     * @return ID
+     */
+    public String getID() {
+        return ID;
+    }
+
+    /**
+     * String-Repräsentation.
+     *
+     * @return Darstellung mit ID, Titel und Erscheinungsjahr
+     */
+    @Override
+    public String toString() {
+        return "ID= " + ID + " ,title=" + title + ", erscheinungsjahr=" + erscheinungsjahr;
+    }
+}
